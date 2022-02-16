@@ -1,12 +1,13 @@
 const {
   client,
+  user,
   // declare your model imports here
   // for example, User
 } = require("./");
 
 async function dropTables() {
   await client.query(`
-  DROP TABLES IF EXISTS users;
+  DROP TABLE IF EXISTS users;
   `);
 }
 
@@ -37,6 +38,13 @@ async function buildTables() {
 
 async function populateInitialData() {
   try {
+    const user1 = await user.createUser({
+      username: "albert",
+      password: "bertie99",
+      first_name: "Alberto",
+      email: "albert123@tets.com",
+      phone: 1124977,
+    });
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
