@@ -21,7 +21,7 @@ async function createUser({ username, password, first_name, email, phone }) {
         VALUES ($1, $2, $3, $4, $5)
         RETURNING *;
       `,
-      [username, password, first_name, email, phone]
+      [username, hashedPassword, password, first_name, email, phone]
     );
 
     delete user.password;
