@@ -1,8 +1,11 @@
 const {
   client,
+  user,
   // declare your model imports here
   // for example, User
 } = require("./");
+
+const { createUser } = require("./models/user");
 
 async function buildTables() {
   try {
@@ -27,6 +30,15 @@ async function buildTables() {
 
 async function populateInitialData() {
   try {
+    const usersToCreate = [
+      {
+        username: "albert",
+        password: "bertie99",
+        first_name: "Alberto",
+        email: "albert123@tets.com",
+      },
+    ];
+    const users = await Promise.all(usersToCreate.map(createUser));
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
