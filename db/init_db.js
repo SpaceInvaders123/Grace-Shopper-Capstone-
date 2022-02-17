@@ -1,8 +1,4 @@
-const {
-  client,
-  // declare your model imports here
-  // for example, User
-} = require("./client");
+const { client } = require("./client");
 
 const { createUser } = require("./models/user.js");
 
@@ -39,7 +35,7 @@ async function buildTables() {
 
       try {
         await client.query(`
-CREATE TABLE USERS (
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(255) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
@@ -135,7 +131,6 @@ CREATE TABLE payment_details (
 
 async function populateInitialData() {
   try {
-    // create useful starting data by leveraging your
     async function createInitialUsers() {
       console.log("---CREATING USERS---");
       try {
