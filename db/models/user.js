@@ -8,7 +8,7 @@ module.exports = {
   createUser,
 };
 
-async function createUser({ username, password, first_name, email, phone }) {
+async function createUser({ username, password, first_name, email }) {
   try {
     const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
@@ -17,11 +17,11 @@ async function createUser({ username, password, first_name, email, phone }) {
       rows: [user],
     } = await client.query(
       `
-        INSERT INTO users (username, password, first_name, email, phone)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO users (username, password, first_name, email)
+        VALUES ($1, $2, $3, $4)
         RETURNING *;
       `,
-      [username, password, first_name, email, phone]
+      [username, password, first_name, email]
     );
 
     delete user.password;
