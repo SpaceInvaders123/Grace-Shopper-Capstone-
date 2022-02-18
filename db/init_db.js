@@ -12,7 +12,7 @@ async function buildTables() {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS users, socks;
     `);
     // build tables in correct order
     await client.query(`
@@ -22,7 +22,18 @@ async function buildTables() {
   password VARCHAR(255) NOT NULL,
   first_name TEXT NOT NULL,
   email VARCHAR(255)
-);`);
+);
+    CREATE TABLE socks (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  price INTEGER NOT NULL, -- EVERYTHING IS A PENNY :)
+  size VARCHAR(50) NOT NULL,
+  description TEXT NOT NULL,
+  product_img TEXT,                      
+  created_at DATE DEFAULT now()
+);
+
+`);
   } catch (error) {
     throw error;
   }
