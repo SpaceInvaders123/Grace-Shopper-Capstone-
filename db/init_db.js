@@ -12,7 +12,7 @@ async function buildTables() {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS users, sock_category;
     `);
     // build tables in correct order
     await client.query(`
@@ -22,7 +22,14 @@ async function buildTables() {
   password VARCHAR(255) NOT NULL,
   first_name TEXT NOT NULL,
   email VARCHAR(255)
-);`);
+);
+
+CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
+CREATE TABLE sock_category (
+  id SERIAL PRIMARY KEY,
+  style sock_style NOT NULL
+);
+`);
   } catch (error) {
     throw error;
   }
