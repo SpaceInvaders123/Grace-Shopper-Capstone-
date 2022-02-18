@@ -14,8 +14,9 @@ async function buildTables() {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TYPE IF EXISTS sock_style;
     DROP TABLE IF EXISTS users, sock_category, sock_inventory, socks;
+    DROP TYPE IF EXISTS sock_style;
+
     `);
     // build tables in correct order
     await client.query(`
@@ -52,6 +53,9 @@ async function buildTables() {
 }
 
 async function populateInitialData() {
+  // create useful starting data by leveraging your
+  // Model.method() adapters to seed your db, for example:
+  // const user1 = await User.createUser({ ...user info goes here... })
   try {
     const usersToCreate = [
       {
@@ -74,9 +78,7 @@ async function populateInitialData() {
       },
     ];
     const socks = await Promise.all(socksToCreate.map(createSocks));
-    // create useful starting data by leveraging your
-    // Model.method() adapters to seed your db, for example:
-    // const user1 = await User.createUser({ ...user info goes here... })
+
     const sock_categoryToCreate = [{ style: "no-show" }];
     const sock_style = await Promise.all(
       sock_categoryToCreate.map(createSock_category)
