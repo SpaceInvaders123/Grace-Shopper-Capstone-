@@ -4,6 +4,7 @@ const {
   // declare your model imports here
   // for example, User
 } = require("./");
+const { createSocks } = require("./models/socks");
 
 const { createUser } = require("./models/user");
 
@@ -26,7 +27,7 @@ async function buildTables() {
     CREATE TABLE socks (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  price INTEGER NOT NULL, -- EVERYTHING IS A PENNY :)
+  price INTEGER NOT NULL, 
   size VARCHAR(50) NOT NULL,
   description TEXT NOT NULL,
   product_img TEXT,                      
@@ -50,6 +51,18 @@ async function populateInitialData() {
       },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
+
+    const socksToCreate = [
+      {
+        name: "Example Sock",
+        price: 500,
+        size: "Large",
+        description:
+          "A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ",
+        product_img: "sockPictureURL.com",
+      },
+    ];
+    const socks = await Promise.all(socksToCreate.map(createSocks));
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
