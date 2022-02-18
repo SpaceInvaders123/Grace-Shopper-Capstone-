@@ -22,7 +22,12 @@ async function buildTables() {
   password VARCHAR(255) NOT NULL,
   first_name TEXT NOT NULL,
   email VARCHAR(255)
-);`);
+);
+    CREATE TABLE sock_inventory (
+  id SERIAL PRIMARY KEY,
+  quantity INTEGER DEFAULT 0
+);
+`);
   } catch (error) {
     throw error;
   }
