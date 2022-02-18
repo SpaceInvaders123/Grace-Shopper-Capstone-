@@ -80,6 +80,7 @@ async function populateInitialData() {
     const sock_categoryToCreate = [{ style: "no-show" }];
     const sock_style = await Promise.all(
       sock_categoryToCreate.map(createSock_category)
+    );
     const sock_inventoryToCreate = [
       {
         quantity: 100,
