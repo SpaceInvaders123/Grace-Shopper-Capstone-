@@ -22,4 +22,8 @@ apiRouter.use("/socks", socksRouter);
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
 
+//SOCK_CATEGORY ROUTER
+const sockCategoryRouter = require("./sock_category");
+apiRouter.use("/sock_category", sockCategoryRouter);
+
 module.exports = apiRouter;
