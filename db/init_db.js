@@ -5,7 +5,7 @@ const {
   // for example, User
 } = require("./");
 const { createSock_category } = require("./models/sock_category");
-const { createSock_Inventory } = require("./models/socks_Inventory");
+const { createSock_inventory } = require("./models/sock_inventory");
 const { createSocks } = require("./models/socks");
 const { createUser } = require("./models/user");
 
@@ -89,7 +89,7 @@ async function populateInitialData() {
       },
     ];
     const sock_inventory = await Promise.all(
-      sock_inventoryToCreate.map(createSock_Inventory)
+      sock_inventoryToCreate.map(createSock_inventory)
     );
   } catch (error) {
     throw error;
