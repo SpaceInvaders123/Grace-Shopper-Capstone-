@@ -8,7 +8,7 @@ async function createSock_Inventory({ quantity }) {
       rows: [sock_inventory],
     } = await client.query(
       `
-      INSERT INTO sock_invetory (quantity)
+      INSERT INTO sock_inventory (quantity)
       VALUES ($1)
       RETURNING *;
       `,
