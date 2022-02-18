@@ -1,8 +1,8 @@
 const client = require("../client");
 
-module.exports = { createSock_Inventory };
+module.exports = { createSock_inventory };
 
-async function createSock_Inventory({ quantity }) {
+async function createSock_inventory({ quantity }) {
   try {
     const {
       rows: [sock_inventory],

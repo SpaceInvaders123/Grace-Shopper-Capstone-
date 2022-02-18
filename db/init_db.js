@@ -5,7 +5,7 @@ const {
   // for example, User
 } = require("./");
 const { createSock_category } = require("./models/sock_category");
-const { createSock_Inventory } = require("./models/socks_Inventory");
+const { createSock_inventory } = require("./models/sock_inventory");
 const { createSocks } = require("./models/socks");
 const { createUser } = require("./models/user");
 
@@ -39,6 +39,8 @@ async function buildTables() {
       );
       CREATE TABLE socks (
           id SERIAL PRIMARY KEY,
+          "category_id" INTEGER REFERENCES sock_category (id),
+          "inventory_id" INTEGER REFERENCES sock_inventory (id),
           name VARCHAR(255) NOT NULL,
           price INTEGER NOT NULL, 
           size VARCHAR(50) NOT NULL,
@@ -70,6 +72,8 @@ async function populateInitialData() {
     const socksToCreate = [
       {
         name: "Example Sock",
+        category_id: 1,
+        inventory_id: 1,
         price: 500,
         size: "Large",
         description:
@@ -89,7 +93,7 @@ async function populateInitialData() {
       },
     ];
     const sock_inventory = await Promise.all(
-      sock_inventoryToCreate.map(createSock_Inventory)
+      sock_inventoryToCreate.map(createSock_inventory)
     );
   } catch (error) {
     throw error;
