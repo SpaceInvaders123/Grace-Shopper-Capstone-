@@ -6,6 +6,7 @@ const {
   UserAddress,
   Category,
   Inventory,
+  OrderDetails,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -112,6 +113,13 @@ const addressesToCreate = [
   },
 ];
 
+const orderDetailsToCreate = [
+  {
+    total: 500,
+    created_at: null,
+  },
+];
+
 const user_addressToCreate = [{ created_at: null }];
 
 const categoryToCreate = [{ style: "no-show" }];
@@ -142,12 +150,20 @@ async function populateInitialData() {
     const inventory = await Promise.all(
       inventoryToCreate.map(Inventory.createInventory)
     );
-
-    [users, socks, addresses, user_address, category, inventory].forEach(
-      (instance) => {
-        console.dir(instance, { depth: null });
-      }
+    const orderDetails = await Promise.all(
+      orderDetailsToCreate.map(OrderDetails.createOrderDetails)
     );
+    [
+      (users,
+      socks,
+      addresses,
+      user_address,
+      category,
+      inventory,
+      orderDetails),
+    ].forEach((instance) => {
+      console.dir(instance, { depth: null });
+    });
 
     console.log("finished populating initial data!");
   } catch (error) {
