@@ -37,6 +37,13 @@ async function buildTables() {
         zipcode VARCHAR(5) NOT NULL
       );
 
+      CREATE TABLE user_address (
+        id SERIAL PRIMARY KEY,
+        "user_id" INTEGER REFERENCES users (id),
+        "adresses_id" INTEGER REFERENCES adresses (id),
+        created_at DATE DEFAULT now()
+      );
+
       CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
       CREATE TABLE sock_category (
         id SERIAL PRIMARY KEY,
