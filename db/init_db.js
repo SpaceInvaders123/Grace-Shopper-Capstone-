@@ -9,13 +9,14 @@ const { createSock_inventory } = require("./models/sock_inventory");
 const { createSocks } = require("./models/socks");
 const { createUser } = require("./models/user");
 const { createAddresses } = require("./models/addresses");
+const { createUser_Addresses } = require("./models/user_address");
 
 async function buildTables() {
   try {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS users, addresses, sock_category, sock_inventory, socks;
+    DROP TABLE IF EXISTS users, addresses, user_address, sock_category, sock_inventory, socks;
     DROP TYPE IF EXISTS sock_style;
 
     `);
@@ -35,6 +36,13 @@ async function buildTables() {
         state VARCHAR(2) NOT NULL,
         city VARCHAR(255) NOT NULL,
         zipcode VARCHAR(5) NOT NULL
+      );
+
+      CREATE TABLE user_address (
+        id SERIAL PRIMARY KEY,
+        "user_id" INTEGER REFERENCES users (id),
+        "addresses_id" INTEGER REFERENCES addresses (id),
+        created_at DATE DEFAULT now()
       );
 
       CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
@@ -101,6 +109,11 @@ async function populateInitialData() {
       },
     ];
     const addresses = await Promise.all(addressesToCreate.map(createAddresses));
+
+    const user_addressToCreate = [{ created_at: null }];
+    const user_address = await Promise.all(
+      user_addressToCreate.map(createUser_Addresses)
+    );
 
     const sock_categoryToCreate = [{ style: "no-show" }];
     const sock_style = await Promise.all(
