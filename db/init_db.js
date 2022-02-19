@@ -7,6 +7,7 @@ const {
   Category,
   Inventory,
   OrderDetails,
+  OrderItems,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -69,12 +70,21 @@ async function buildTables() {
           product_img TEXT,                      
           created_at DATE DEFAULT now()
       );
+
       CREATE TABLE order_details (
         id SERIAL PRIMARY KEY, 
         "user_id" INTEGER REFERENCES users (id),
         total INTEGER,
         created_at DATE DEFAULT now()
-        );
+      );
+
+      CREATE TABLE order_items (
+        id SERIAL PRIMARY KEY,
+        order_id INTEGER REFERENCES order_details (id),
+        product_id INTEGER REFERENCES socks (id),
+        quantity INTEGER NOT NULL,
+        created_at DATE DEFAULT now()
+      );
     `);
   } catch (error) {
     throw error;
@@ -106,7 +116,7 @@ const socksToCreate = [
 
 const addressesToCreate = [
   {
-    adress_line: "42 Wallaby Way",
+    address_line: "42 Wallaby Way",
     state: "TX",
     city: "Burleson",
     zipcode: "76028",
@@ -116,6 +126,13 @@ const addressesToCreate = [
 const orderDetailsToCreate = [
   {
     total: 500,
+    created_at: null,
+  },
+];
+
+const orderItemsToCreate = [
+  {
+    quantity: 10,
     created_at: null,
   },
 ];
@@ -153,6 +170,9 @@ async function populateInitialData() {
     const orderDetails = await Promise.all(
       orderDetailsToCreate.map(OrderDetails.createOrderDetails)
     );
+    const orderItems = await Promise.all(
+      orderItemsToCreate.map(OrderItems.createOrderDetails)
+    );
     [
       (users,
       socks,
@@ -160,7 +180,8 @@ async function populateInitialData() {
       user_address,
       category,
       inventory,
-      orderDetails),
+      orderDetails,
+      orderItems),
     ].forEach((instance) => {
       console.dir(instance, { depth: null });
     });
