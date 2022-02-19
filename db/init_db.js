@@ -40,7 +40,7 @@ async function buildTables() {
       CREATE TABLE user_address (
         id SERIAL PRIMARY KEY,
         "user_id" INTEGER REFERENCES users (id),
-        "adresses_id" INTEGER REFERENCES adresses (id),
+        "addresses_id" INTEGER REFERENCES addresses (id),
         created_at DATE DEFAULT now()
       );
 
