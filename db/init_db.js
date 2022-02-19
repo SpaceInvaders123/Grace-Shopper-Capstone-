@@ -15,7 +15,7 @@ async function buildTables() {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS users, addresses, user_address, category, inventory, socks, details;
+    DROP TABLE IF EXISTS users, addresses, user_address, category, inventory, socks, order_details;
     DROP TYPE IF EXISTS sock_style;\
 
     `);
@@ -68,7 +68,7 @@ async function buildTables() {
           product_img TEXT,                      
           created_at DATE DEFAULT now()
       );
-      CREATE TABLE details (
+      CREATE TABLE order_details (
         id SERIAL PRIMARY KEY, 
         "user_id" INTEGER REFERENCES users (id),
         total INTEGER,
