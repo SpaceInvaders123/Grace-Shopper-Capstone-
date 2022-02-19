@@ -4,6 +4,7 @@ module.exports = {
   createAddresses,
   getAllAddresses,
   updateAddresses,
+  hardDeleteUser,
 };
 
 async function createAddresses({ adress_line, state, city, zipcode }) {
@@ -63,6 +64,23 @@ async function updateAddresses(addressesId, updateFields) {
     );
 
     return address;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function hardDeleteUser(addressesId) {
+  try {
+    await client.query(
+      `
+    DELETE FROM addresses
+    WHERE id = $1; `,
+      [addressesId]
+    );
+    return {
+      ok: true,
+      message: `address with id ${addressesId} was successfully deleted!`,
+    };
   } catch (err) {
     throw err;
   }
