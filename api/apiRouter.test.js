@@ -30,3 +30,31 @@ describe("/api/users endpoint", () => {
     expect(response.body.healthy).toBe(true);
   });
 });
+
+describe("/api/socks endpoint", () => {
+  // close db connection and supertest server tcp connection
+  afterAll(async () => {
+    await client.end();
+    handle.close();
+  });
+
+  it("should respond with { message: Socks API up and runnning. }", async () => {
+    const response = await request.get("/api/health");
+    expect(response.status).toBe(200);
+    expect(response.body.healthy).toBe(true);
+  });
+});
+
+describe("/api/address endpoint", () => {
+  // close db connection and supertest server tcp connection
+  afterAll(async () => {
+    await client.end();
+    handle.close();
+  });
+
+  it("should respond with { message: Addresses API up and running }", async () => {
+    const response = await request.get("/api/health");
+    expect(response.status).toBe(200);
+    expect(response.body.healthy).toBe(true);
+  });
+});
