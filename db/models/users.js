@@ -6,6 +6,9 @@ module.exports = {
   // add your database adapter fns here
   getAllUsers,
   createUser,
+  updateUser,
+  softDeleteUser,
+  hardDeleteUser,
 };
 
 async function createUser({ username, password, first_name, email }) {
@@ -34,10 +37,67 @@ async function createUser({ username, password, first_name, email }) {
 async function getAllUsers() {
   try {
     const { rows: users } = await client.query(`
-    SELECT username, first_name, email FROM users;    
+    SELECT username, first_name, email, deleted_at FROM users
+    WHERE deleted_at IS NULL;    
   `);
 
     return users;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function updateUser(userId, updateFields) {
+  try {
+    const setString = Object.keys(updateFields).map(
+      (key, idx) => `${key} = ${idx + 2}`
+    );
+
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+      UPDATE users
+      SET (${setString})
+      WHERE id = $1
+      RETURNING *;
+    `,
+      [userId, ...Object.values(updateFields)]
+    );
+
+    return user;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function softDeleteUser(userId) {
+  try {
+    const now = new Date();
+    const user = await updateUser(userId, { deleted_at: now.toISOString() });
+    return user;
+  } catch (err) {
+    throw err;
+  }
+}
+
+// test fn only! hard delete user
+// also for GDPR compliance :)
+async function hardDeleteUser(userId) {
+  try {
+    await client.query(
+      `
+      DELETE FROM users
+      WHERE id = $1;
+    
+    `,
+      [userId]
+    );
+
+    return {
+      ok: true,
+      message: `user with id ${userId} was successfully deleted!`,
+    };
   } catch (err) {
     throw err;
   }

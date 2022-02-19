@@ -1,6 +1,7 @@
 const express = require('express');
 const usersRouter = express.Router();
 const { User } = require('../db/models');
+
 module.exports = usersRouter;
 
 usersRouter.get('/', async (req, res, next) => {
