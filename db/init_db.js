@@ -8,6 +8,7 @@ const {
   Inventory,
   OrderDetails,
   OrderItems,
+  PaymentDetails,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -18,12 +19,12 @@ async function buildTables() {
     // drop tables in correct order
     await client.query(`
     DROP TABLE IF EXISTS users, addresses, user_address, category, inventory, socks, order_details;
-    DROP TYPE IF EXISTS sock_style;\
-
+    DROP TYPE IF EXISTS sock_style, payment_status;
     `);
     // build tables in correct order
     await client.query(`
       CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
+      CREATE TYPE payment_status AS ENUM('pending', 'settled', 'failed');
 
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -85,6 +86,13 @@ async function buildTables() {
         quantity INTEGER NOT NULL,
         created_at DATE DEFAULT now()
       );
+
+      CREATE TABLE payment_details (
+        id SERIAL PRIMARY KEY,
+        order_id INTEGER REFERENCES order_details (id),
+        amount INTEGER,
+        status payment_status NOT NULL 
+      );
     `);
   } catch (error) {
     throw error;
@@ -137,6 +145,13 @@ const orderItemsToCreate = [
   },
 ];
 
+const paymentDetailsToCreate = [
+  {
+    amount: 10,
+    payment_status: "pending",
+  },
+];
+
 const user_addressToCreate = [{ created_at: null }];
 
 const categoryToCreate = [{ style: "no-show" }];
@@ -173,6 +188,12 @@ async function populateInitialData() {
     const orderItems = await Promise.all(
       orderItemsToCreate.map(OrderItems.createOrderItems)
     );
+    const orderDetails = await Promise.all(
+      orderDetailsToCreate.map(OrderDetails.createOrderDetails)
+    );
+    const paymentDetails = await Promise.all(
+      paymentDetailsToCreate.map(PaymentDetails.createPaymentDetails)
+    );
     [
       (users,
       socks,
@@ -181,7 +202,8 @@ async function populateInitialData() {
       category,
       inventory,
       orderDetails,
-      orderItems),
+      orderItems,
+      paymentDetails),
     ].forEach((instance) => {
       console.dir(instance, { depth: null });
     });
