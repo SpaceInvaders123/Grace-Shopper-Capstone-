@@ -9,6 +9,7 @@ const { createSock_inventory } = require("./models/sock_inventory");
 const { createSocks } = require("./models/socks");
 const { createUser } = require("./models/user");
 const { createAddresses } = require("./models/addresses");
+const { createUser_Addresses } = require("./models/user_address");
 
 async function buildTables() {
   try {
@@ -108,6 +109,11 @@ async function populateInitialData() {
       },
     ];
     const addresses = await Promise.all(addressesToCreate.map(createAddresses));
+
+    const user_addressToCreate = [{ created_at: null }];
+    const user_address = await Promise.all(
+      user_addressToCreate.map(createUser_Addresses)
+    );
 
     const sock_categoryToCreate = [{ style: "no-show" }];
     const sock_style = await Promise.all(
