@@ -2,6 +2,7 @@ const client = require("../client");
 
 module.exports = {
   createAddresses,
+  getAllAddresses,
 };
 
 async function createAddresses({ adress_line, state, city, zipcode }) {
@@ -16,6 +17,17 @@ async function createAddresses({ adress_line, state, city, zipcode }) {
       [adress_line, state, city, zipcode]
     );
     return adresses;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getAllAddresses() {
+  try {
+    const { rows: addresses } = await client.query(`
+    SELECT id, address_line, state, city, zipcode
+    FROM addresses; `);
+    return addresses;
   } catch (err) {
     throw err;
   }
