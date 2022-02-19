@@ -5,6 +5,12 @@ const supertest = require('supertest');
 const request = supertest(server);
 
 describe('/api/users endpoint', () => {
+  let createdUser;
+
+  // idempotence: repeatability
+  // if our tests are idempotent we can run them as many times as we like
+  // and they'll always produce the same results
+  // which is kind of a requirement for unit tests
   beforeAll(async () => {
     await client.connect();
 
@@ -15,25 +21,38 @@ describe('/api/users endpoint', () => {
       email: 'new-user@mail.com',
     };
 
-    const user = await User.createUser(newUser);
-
-    console.dir(user, { depth: null });
+    createdUser = await User.createUser(newUser);
+    console.dir(createdUser, { depth: null });
   });
 
   // close db connection and supertest server tcp connection
   afterAll(async () => {
+    const message = await User.hardDeleteUser(createdUser.id);
+    console.log(message);
     await client.end();
     handle.close();
   });
 
   it('GET /users returns all users with the new user added', async () => {
     const response = await request.get('/api/users');
-
-    console.dir(response, { depth: null });
-
     expect(response.status).toBe(200);
-    const user = response.body.users[response.users.length - 1];
+    const user = response.body.users[response.body.users.length - 1];
     expect(user).toBeTruthy();
-    expect(user.email).toEqual(newUser.email);
+    expect(user.email).toEqual(createdUser.email);
+  });
+
+  it('POST /users creates a user and returns the new user object', async () => {
+    const postUser = {
+      username: 'post-user',
+      password: '123123123',
+      first_name: 'wally',
+      email: 'wally@mail.com',
+    };
+
+    const response = await request.post('/api/users/register').send(postUser);
+    expect(response.status).toBe(201);
+    const user = response.body.user;
+    expect(user).toBeTruthy();
+    expect(user.username).toEqual(postUser.username);
   });
 });

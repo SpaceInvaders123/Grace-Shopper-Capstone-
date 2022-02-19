@@ -30,8 +30,19 @@ usersRouter.post('/register', async (req, res, next) => {
       email,
     });
 
-    res.send({ user });
+    res.status(201).send({ user });
   } catch (error) {
     next(error);
+  }
+});
+
+usersRouter.patch('/:id', async (req, res, next) => {
+  try {
+    const { username, first_name, email } = req.body;
+    const updateFields = { username, first_name, email };
+    const user = await User.updateUser(req.params.id, updateFields);
+    res.status(204).send(user);
+  } catch (err) {
+    next(err);
   }
 });
