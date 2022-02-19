@@ -24,6 +24,7 @@ async function buildTables() {
     // build tables in correct order
     await client.query(`
       CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
+      CREATE TYPE payment_status AS ENUM('pending', 'settled', 'failed');
 
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -84,6 +85,13 @@ async function buildTables() {
         product_id INTEGER REFERENCES socks (id),
         quantity INTEGER NOT NULL,
         created_at DATE DEFAULT now()
+      );
+
+      CREATE TABLE payment_details (
+        id SERIAL PRIMARY KEY,
+        order_id INTEGER REFERENCES order_details (id),
+        amount INTEGER,
+        status payment_status NOT NULL 
       );
     `);
   } catch (error) {
