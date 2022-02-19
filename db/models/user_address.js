@@ -1,10 +1,10 @@
-const client = require("../client");
+const client = require('../client');
 
 module.exports = {
-  createUser_Addresses,
+  createUserAddress,
 };
 
-async function createUser_Addresses({ created_at }) {
+async function createUserAddress({ created_at }) {
   try {
     const {
       rows: [user_address],
@@ -15,6 +15,7 @@ async function createUser_Addresses({ created_at }) {
     RETURNING *;`,
       [created_at]
     );
+
     return user_address;
   } catch (err) {
     throw err;

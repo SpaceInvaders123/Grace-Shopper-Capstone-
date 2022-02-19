@@ -1,22 +1,21 @@
 const {
   client,
-  user,
+  User,
+  Sock,
+  Address,
+  UserAddress,
+  Category,
+  Inventory,
   // declare your model imports here
   // for example, User
-} = require("./");
-const { createSock_category } = require("./models/sock_category");
-const { createSock_inventory } = require("./models/sock_inventory");
-const { createSocks } = require("./models/socks");
-const { createUser } = require("./models/user");
-const { createAddresses } = require("./models/addresses");
-const { createUser_Addresses } = require("./models/user_address");
+} = require('./');
 
 async function buildTables() {
   try {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS users, addresses, user_address, sock_category, sock_inventory, socks;
+    DROP TABLE IF EXISTS users, addresses, user_address, category, inventory, socks;
     DROP TYPE IF EXISTS sock_style;
 
     `);
@@ -46,18 +45,18 @@ async function buildTables() {
       );
 
       CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
-      CREATE TABLE sock_category (
+      CREATE TABLE category (
         id SERIAL PRIMARY KEY,
         style sock_style NOT NULL
       );
-      CREATE TABLE sock_inventory (
+      CREATE TABLE inventory (
           id SERIAL PRIMARY KEY,
           quantity INTEGER DEFAULT 0
       );
       CREATE TABLE socks (
           id SERIAL PRIMARY KEY,
-          "category_id" INTEGER REFERENCES sock_category (id),
-          "inventory_id" INTEGER REFERENCES sock_inventory (id),
+          "category_id" INTEGER REFERENCES category (id),
+          "inventory_id" INTEGER REFERENCES inventory (id),
           name VARCHAR(255) NOT NULL,
           price INTEGER NOT NULL, 
           size VARCHAR(50) NOT NULL,
@@ -71,62 +70,76 @@ async function buildTables() {
   }
 }
 
+// store constants outside of the function
+const usersToCreate = [
+  {
+    username: 'albert',
+    password: 'bertie99',
+    first_name: 'Alberto',
+    email: 'albert123@tets.com',
+  },
+];
+
+const socksToCreate = [
+  {
+    name: 'Example Sock',
+    category_id: 1,
+    inventory_id: 1,
+    price: 500,
+    size: 'Large',
+    description:
+      'A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ',
+    product_img: 'sockPictureURL.com',
+  },
+];
+
+const addressesToCreate = [
+  {
+    adress_line: '42 Wallaby Way',
+    state: 'TX',
+    city: 'Burleson',
+    zipcode: '76028',
+  },
+];
+
+const user_addressToCreate = [{ created_at: null }];
+
+const categoryToCreate = [{ style: 'no-show' }];
+
+const inventoryToCreate = [
+  {
+    quantity: 100,
+  },
+];
+
 async function populateInitialData() {
   // create useful starting data by leveraging your
   // Model.method() adapters to seed your db, for example:
   // const user1 = await User.createUser({ ...user info goes here... })
   try {
-    const usersToCreate = [
-      {
-        username: "albert",
-        password: "bertie99",
-        first_name: "Alberto",
-        email: "albert123@tets.com",
-      },
-    ];
-    const users = await Promise.all(usersToCreate.map(createUser));
-
-    const socksToCreate = [
-      {
-        name: "Example Sock",
-        category_id: 1,
-        inventory_id: 1,
-        price: 500,
-        size: "Large",
-        description:
-          "A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ",
-        product_img: "sockPictureURL.com",
-      },
-    ];
-    const socks = await Promise.all(socksToCreate.map(createSocks));
-
-    const addressesToCreate = [
-      {
-        adress_line: "42 Wallaby Way",
-        state: "TX",
-        city: "Burleson",
-        zipcode: "76028",
-      },
-    ];
-    const addresses = await Promise.all(addressesToCreate.map(createAddresses));
-
-    const user_addressToCreate = [{ created_at: null }];
+    console.log('populating initial data!');
+    const users = await Promise.all(usersToCreate.map(User.createUser));
+    const socks = await Promise.all(socksToCreate.map(Sock.createSocks));
+    const addresses = await Promise.all(
+      addressesToCreate.map(Address.createAddresses)
+    );
     const user_address = await Promise.all(
-      user_addressToCreate.map(createUser_Addresses)
+      user_addressToCreate.map(UserAddress.createUserAddress)
+    );
+    const category = await Promise.all(
+      categoryToCreate.map(Category.createCategory)
+    );
+    const inventory = await Promise.all(
+      inventoryToCreate.map(Inventory.createInventory)
     );
 
-    const sock_categoryToCreate = [{ style: "no-show" }];
-    const sock_style = await Promise.all(
-      sock_categoryToCreate.map(createSock_category)
+    [users, socks, addresses, user_address, category, inventory].forEach(
+      (instance) => {
+        console.dir(instance, { depth: null });
+      }
     );
-    const sock_inventoryToCreate = [
-      {
-        quantity: 100,
-      },
-    ];
-    const sock_inventory = await Promise.all(
-      sock_inventoryToCreate.map(createSock_inventory)
-    );
+
+    console.log('finished populating initial data!');
   } catch (error) {
     throw error;
   }

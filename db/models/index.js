@@ -1,4 +1,10 @@
 module.exports = {
+  User: require('./users'),
+  Sock: require('./socks'),
+  Address: require('./addresses'),
+  UserAddress: require('./user_address'),
+  Category: require('./category'),
+  Inventory: require('./inventory'),
   // add each model to your exports object here
   // so that you can use them in your express server api routers
   // for example, create a users.js file for a User model
