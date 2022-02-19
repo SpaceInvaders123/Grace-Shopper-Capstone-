@@ -6,6 +6,7 @@ const {
   UserAddress,
   Category,
   Inventory,
+  OrderDetails,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -15,8 +16,8 @@ async function buildTables() {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS users, addresses, user_address, category, inventory, socks;
-    DROP TYPE IF EXISTS sock_style;
+    DROP TABLE IF EXISTS users, addresses, user_address, category, inventory, socks, order_details;
+    DROP TYPE IF EXISTS sock_style;\
 
     `);
     // build tables in correct order
@@ -68,6 +69,12 @@ async function buildTables() {
           product_img TEXT,                      
           created_at DATE DEFAULT now()
       );
+      CREATE TABLE order_details (
+        id SERIAL PRIMARY KEY, 
+        "user_id" INTEGER REFERENCES users (id),
+        total INTEGER,
+        created_at DATE DEFAULT now()
+        );
     `);
   } catch (error) {
     throw error;
@@ -115,6 +122,7 @@ const inventoryToCreate = [
     quantity: 100,
   },
 ];
+const orderDetailsToCreate = [{ total: 100 }];
 
 async function populateInitialData() {
   // create useful starting data by leveraging your
@@ -136,12 +144,20 @@ async function populateInitialData() {
     const inventory = await Promise.all(
       inventoryToCreate.map(Inventory.createInventory)
     );
-
-    [users, socks, addresses, user_address, category, inventory].forEach(
-      (instance) => {
-        console.dir(instance, { depth: null });
-      }
+    const orderDetails = await Promise.all(
+      orderDetailsToCreate.map(OrderDetails.createOrderDetails)
     );
+    [
+      (users,
+      socks,
+      addresses,
+      user_address,
+      category,
+      inventory,
+      orderDetails),
+    ].forEach((instance) => {
+      console.dir(instance, { depth: null });
+    });
 
     console.log("finished populating initial data!");
   } catch (error) {
