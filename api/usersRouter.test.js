@@ -6,6 +6,7 @@ const request = supertest(server);
 
 describe('/api/users endpoint', () => {
   let createdUser;
+  /* put the post user bucket here */
 
   // idempotence: repeatability
   // if our tests are idempotent we can run them as many times as we like
@@ -28,6 +29,7 @@ describe('/api/users endpoint', () => {
   // close db connection and supertest server tcp connection
   afterAll(async () => {
     const message = await User.hardDeleteUser(createdUser.id);
+    /* also delete the postUser that was stored in the parent scope */
     console.log(message);
     await client.end();
     handle.close();

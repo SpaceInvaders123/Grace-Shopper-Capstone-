@@ -37,7 +37,7 @@ async function createUser({ username, password, first_name, email }) {
 async function getAllUsers() {
   try {
     const { rows: users } = await client.query(`
-    SELECT username, first_name, email, deleted_at FROM users
+    SELECT id, username, first_name, email, deleted_at FROM users
     WHERE deleted_at IS NULL;    
   `);
 
@@ -49,16 +49,29 @@ async function getAllUsers() {
 
 async function updateUser(userId, updateFields) {
   try {
-    const setString = Object.keys(updateFields).map(
-      (key, idx) => `${key} = ${idx + 2}`
-    );
+    console.log(Object.keys(updateFields).length);
+
+    // this removes any undefined fields from our API req.body
+    for (const key in updateFields) {
+      if (updateFields[key] === undefined) {
+        delete updateFields[key];
+      }
+    }
+
+    console.log(Object.keys(updateFields).length);
+
+    const setString = Object.keys(updateFields)
+      .map((key, idx) => `${key} = $${idx + 2}`)
+      .join(', ');
+
+    console.log(setString);
 
     const {
       rows: [user],
     } = await client.query(
       `
       UPDATE users
-      SET (${setString})
+      SET ${setString}
       WHERE id = $1
       RETURNING *;
     `,
