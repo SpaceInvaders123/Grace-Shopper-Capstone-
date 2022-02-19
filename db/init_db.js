@@ -15,7 +15,7 @@ async function buildTables() {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS users, addresses, sock_category, sock_inventory, socks;
+    DROP TABLE IF EXISTS users, addresses, user_address, sock_category, sock_inventory, socks;
     DROP TYPE IF EXISTS sock_style;
 
     `);
