@@ -1,10 +1,10 @@
-const express = require("express");
-const user_addressesRouter = express.Router();
-module.exports = user_addressesRouter;
+const express = require('express');
+const userAddressRouter = express.Router();
+module.exports = userAddressRouter;
 
-user_addressesRouter.get("/", async (req, res, next) => {
+userAddressRouter.get('/', async (req, res, next) => {
   try {
-    res.send({ message: "User_address API up and running" });
+    res.send({ message: 'User_address API up and running' });
   } catch (err) {
     next(err);
   }
