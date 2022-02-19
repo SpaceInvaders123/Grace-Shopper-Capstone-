@@ -22,6 +22,10 @@ apiRouter.use("/socks", socksRouter);
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
 
+//ADDRESSES ROUTER
+const addressesRouter = require("./addresses");
+apiRouter.use("/addresses", addressesRouter);
+
 //SOCK_CATEGORY ROUTER
 const sockCategoryRouter = require("./sock_category");
 apiRouter.use("/sock_category", sockCategoryRouter);
