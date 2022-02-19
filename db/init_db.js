@@ -8,6 +8,7 @@ const {
   Inventory,
   OrderDetails,
   OrderItems,
+  PaymentDetails,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -145,6 +146,13 @@ const orderItemsToCreate = [
   },
 ];
 
+const paymentDetailsToCreate = [
+  {
+    amount: 10,
+    payment_status: "pending",
+  },
+];
+
 const user_addressToCreate = [{ created_at: null }];
 
 const categoryToCreate = [{ style: "no-show" }];
@@ -181,6 +189,12 @@ async function populateInitialData() {
     const orderItems = await Promise.all(
       orderItemsToCreate.map(OrderItems.createOrderItems)
     );
+    const orderDetails = await Promise.all(
+      orderDetailsToCreate.map(OrderDetails.createOrderDetails)
+    );
+    const paymentDetails = await Promise.all(
+      paymentDetailsToCreate.map(PaymentDetails.createPaymentDetails)
+    );
     [
       (users,
       socks,
@@ -189,7 +203,8 @@ async function populateInitialData() {
       category,
       inventory,
       orderDetails,
-      orderItems),
+      orderItems,
+      paymentDetails),
     ].forEach((instance) => {
       console.dir(instance, { depth: null });
     });
