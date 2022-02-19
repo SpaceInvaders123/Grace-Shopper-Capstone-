@@ -36,7 +36,7 @@ async function buildTables() {
 
       CREATE TABLE addresses (
         id SERIAL PRIMARY KEY,
-        adress_line VARCHAR(255) NOT NULL,
+        address_line VARCHAR(255) NOT NULL,
         state VARCHAR(2) NOT NULL,
         city VARCHAR(255) NOT NULL,
         zipcode VARCHAR(5) NOT NULL
@@ -171,7 +171,7 @@ async function populateInitialData() {
       orderDetailsToCreate.map(OrderDetails.createOrderDetails)
     );
     const orderItems = await Promise.all(
-      orderItemsToCreate.map(OrderItems.createOrderDetails)
+      orderItemsToCreate.map(OrderItems.createOrderItems)
     );
     [
       (users,
