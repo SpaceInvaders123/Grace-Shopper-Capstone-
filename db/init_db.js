@@ -21,6 +21,8 @@ async function buildTables() {
     `);
     // build tables in correct order
     await client.query(`
+      CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
+
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
@@ -44,15 +46,16 @@ async function buildTables() {
         created_at DATE DEFAULT now()
       );
 
-      CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
       CREATE TABLE category (
         id SERIAL PRIMARY KEY,
         style sock_style NOT NULL
       );
+      
       CREATE TABLE inventory (
           id SERIAL PRIMARY KEY,
           quantity INTEGER DEFAULT 0
       );
+      
       CREATE TABLE socks (
           id SERIAL PRIMARY KEY,
           "category_id" INTEGER REFERENCES category (id),
