@@ -10,7 +10,7 @@ async function createAddresses({ adress_line, state, city, zipcode }) {
       rows: [adresses],
     } = await client.query(
       `
-    INSERT INTO adresses (adress_line, state, city, zipcode)
+    INSERT INTO addresses (adress_line, state, city, zipcode)
     VALUES ($1, $2, $3, $4)
     RETURNING *;`,
       [adress_line, state, city, zipcode]
