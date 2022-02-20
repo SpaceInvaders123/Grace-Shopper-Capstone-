@@ -3,6 +3,7 @@ const client = require("../client");
 module.exports = {
   createUserAddress,
   getAllUserAddress,
+  updateUserAddress,
 };
 
 async function createUserAddress({ created_at }) {
@@ -28,6 +29,40 @@ async function getAllUserAddress() {
     const { rows: user_address } = await client.query(`
     SELECT id, addresses_id, created_at
     FROM user_address; `);
+    return user_address;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function updateUserAddress(userAddressId, updateFields) {
+  try {
+    console.log(Object.keys(updateFields).length);
+
+    //removes any undefined fields from our API req.body
+    for (const key in updateFields) {
+      if (updateFields[key] === undefined) {
+        delete updateFields[key];
+      }
+    }
+
+    const setString = Object.keys(updateFields)
+      .map((key, idx) => `${key} = $${idx + 2}`)
+      .join(", ");
+
+    console.log(setString);
+
+    const {
+      rows: [user_address],
+    } = await client.query(
+      `
+    UPDATE user_address
+    SET ${setString}
+    WHERE id = $1
+    RETURNING *;`,
+      [userAddressId, ...Object.values(updateFields)]
+    );
+
     return user_address;
   } catch (err) {
     throw err;
