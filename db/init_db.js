@@ -191,8 +191,9 @@ async function populateInitialData() {
     const paymentDetails = await Promise.all(
       paymentDetailsToCreate.map(PaymentDetails.createPaymentDetails)
     );
+
     [
-      (users,
+      users,
       socks,
       addresses,
       user_address,
@@ -200,7 +201,7 @@ async function populateInitialData() {
       inventory,
       orderDetails,
       orderItems,
-      paymentDetails),
+      paymentDetails,
     ].forEach((instance) => {
       console.dir(instance, { depth: null });
     });
