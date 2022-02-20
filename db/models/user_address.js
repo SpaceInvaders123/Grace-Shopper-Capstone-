@@ -4,6 +4,7 @@ module.exports = {
   createUserAddress,
   getAllUserAddress,
   updateUserAddress,
+  hardDeleteUserAddress,
 };
 
 async function createUserAddress({ created_at }) {
@@ -64,6 +65,23 @@ async function updateUserAddress(userAddressId, updateFields) {
     );
 
     return user_address;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function hardDeleteUserAddress(userAddressId) {
+  try {
+    await client.query(
+      `
+    DELETE FROM user_address
+    WHERE id = $1; `,
+      [userAddressId]
+    );
+    return {
+      ok: true,
+      message: `address with id ${userAddressId} was successfully deleted!`,
+    };
   } catch (err) {
     throw err;
   }
