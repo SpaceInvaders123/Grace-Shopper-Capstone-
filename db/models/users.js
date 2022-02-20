@@ -126,7 +126,7 @@ async function getUserByUserName(username) {
     } = await client.query(
       `
       SELECT * from users
-      WHERE username =$1
+      WHERE username = $1;
       `,
       [username]
     );
