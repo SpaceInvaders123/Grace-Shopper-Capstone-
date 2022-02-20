@@ -9,8 +9,7 @@ const DB_URL =
 
 let client;
 
-// important! the client instance must be initialized with user/password
-// when running in the GitHub Actions CI environment
+// github actions client config
 if (process.env.CI) {
   client = new Client({
     host: 'localhost',
@@ -19,9 +18,8 @@ if (process.env.CI) {
     password: 'postgres',
     database: 'postgres',
   });
-  // otherwise, client is instantiated with the Heroku database url
-  // or the local devenv connection string
 } else {
+  // local / heroku client config
   client = new Client(DB_URL);
 }
 
