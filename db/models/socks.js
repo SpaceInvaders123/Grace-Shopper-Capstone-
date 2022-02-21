@@ -3,6 +3,7 @@ const client = require("../client");
 module.exports = {
   createSocks,
   getAllSocks,
+  destroySock,
 };
 
 async function createSocks({
@@ -39,5 +40,23 @@ async function getAllSocks() {
     return socks;
   } catch (error) {
     next(error);
+  }
+}
+
+async function destroySock(sockId) {
+  try {
+    const {
+      rows: [sock],
+    } = await client.query(
+      `
+      DELETE FROM socks
+      WHERE id=$1
+      RETURNING *;
+      `,
+      [sockId]
+    );
+    return sock;
+  } catch (err) {
+    throw err;
   }
 }

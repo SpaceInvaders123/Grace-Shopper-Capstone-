@@ -1,7 +1,8 @@
 const express = require("express");
-const { getAllSocks, createSocks } = require("../db/models/socks");
+const { getAllSocks, createSocks, destroySock } = require("../db/models/socks");
 const socksRouter = express.Router();
 module.exports = socksRouter;
+const authorizeUser = require("./auth");
 
 socksRouter.get("/", async (req, res, next) => {
   try {
@@ -25,6 +26,15 @@ socksRouter.post("/", async (req, res, next) => {
       created_at,
     });
     res.send(socks);
+  } catch (error) {
+    next(error);
+  }
+});
+
+socksRouter.delete("/:sockId", authorizeUser, async (req, res, next) => {
+  try {
+    const destroy_sock = await destroySock(req.params.sockId);
+    res.send(destroy_sock);
   } catch (error) {
     next(error);
   }
