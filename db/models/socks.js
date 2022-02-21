@@ -2,6 +2,7 @@ const client = require("../client");
 
 module.exports = {
   createSocks,
+  getAllSocks,
 };
 
 async function createSocks({
@@ -26,5 +27,17 @@ async function createSocks({
     return socks;
   } catch (error) {
     throw error;
+  }
+}
+
+async function getAllSocks() {
+  try {
+    const { rows: socks } = await client.query(`
+      SELECT * FROM socks;
+      `);
+
+    return socks;
+  } catch (error) {
+    next(error);
   }
 }
