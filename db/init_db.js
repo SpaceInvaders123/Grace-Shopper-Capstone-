@@ -11,7 +11,7 @@ const {
   PaymentDetails,
   // declare your model imports here
   // for example, User
-} = require("./");
+} = require('./');
 
 async function buildTables() {
   try {
@@ -102,32 +102,32 @@ async function buildTables() {
 // store constants outside of the function
 const usersToCreate = [
   {
-    username: "albert",
-    password: "bertie99",
-    first_name: "Alberto",
-    email: "albert123@tets.com",
+    username: 'albert',
+    password: 'bertie99',
+    first_name: 'Alberto',
+    email: 'albert123@tets.com',
   },
 ];
 
 const socksToCreate = [
   {
-    name: "Example Sock",
+    name: 'Example Sock',
     category_id: 1,
     inventory_id: 1,
     price: 500,
-    size: "Large",
+    size: 'Large',
     description:
-      "A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ",
-    product_img: "sockPictureURL.com",
+      'A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ',
+    product_img: 'sockPictureURL.com',
   },
 ];
 
 const addressesToCreate = [
   {
-    address_line: "42 Wallaby Way",
-    state: "TX",
-    city: "Burleson",
-    zipcode: "76028",
+    address_line: '42 Wallaby Way',
+    state: 'TX',
+    city: 'Burleson',
+    zipcode: '76028',
   },
 ];
 
@@ -148,13 +148,13 @@ const orderItemsToCreate = [
 const paymentDetailsToCreate = [
   {
     amount: 10,
-    payment_status: "pending",
+    payment_status: 'pending',
   },
 ];
 
 const user_addressToCreate = [{ created_at: null }];
 
-const categoryToCreate = [{ style: "no-show" }];
+const categoryToCreate = [{ style: 'no-show' }];
 
 const inventoryToCreate = [
   {
@@ -167,7 +167,7 @@ async function populateInitialData() {
   // Model.method() adapters to seed your db, for example:
   // const user1 = await User.createUser({ ...user info goes here... })
   try {
-    console.log("populating initial data!");
+    console.log('populating initial data!');
     const users = await Promise.all(usersToCreate.map(User.createUser));
     const socks = await Promise.all(socksToCreate.map(Sock.createSocks));
     const addresses = await Promise.all(
@@ -188,14 +188,12 @@ async function populateInitialData() {
     const orderItems = await Promise.all(
       orderItemsToCreate.map(OrderItems.createOrderItems)
     );
-    const orderDetails = await Promise.all(
-      orderDetailsToCreate.map(OrderDetails.createOrderDetails)
-    );
     const paymentDetails = await Promise.all(
       paymentDetailsToCreate.map(PaymentDetails.createPaymentDetails)
     );
+
     [
-      (users,
+      users,
       socks,
       addresses,
       user_address,
@@ -203,12 +201,12 @@ async function populateInitialData() {
       inventory,
       orderDetails,
       orderItems,
-      paymentDetails),
+      paymentDetails,
     ].forEach((instance) => {
       console.dir(instance, { depth: null });
     });
 
-    console.log("finished populating initial data!");
+    console.log('finished populating initial data!');
   } catch (error) {
     throw error;
   }
