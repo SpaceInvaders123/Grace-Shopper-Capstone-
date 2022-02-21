@@ -4,6 +4,7 @@ module.exports = {
   createSocks,
   getAllSocks,
   destroySock,
+  updateSock,
 };
 
 async function createSocks({
@@ -54,6 +55,33 @@ async function destroySock(sockId) {
       RETURNING *;
       `,
       [sockId]
+    );
+    return sock;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function updateSock({
+  id,
+  name,
+  price,
+  size,
+  description,
+  product_img,
+  created_at,
+}) {
+  try {
+    const {
+      rows: [sock],
+    } = await client.query(
+      `
+        UPDATE socks
+        SET name=$1, price=$2, size=$3, description=$4, product_img=$5, created_at=$6
+        WHERE id=$7
+        RETURNING *;
+        `,
+      [name, price, size, description, product_img, created_at, id]
     );
     return sock;
   } catch (err) {
