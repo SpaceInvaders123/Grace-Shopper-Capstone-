@@ -11,6 +11,7 @@ module.exports = {
   hardDeleteUser,
   getUserByUserName,
   getUser,
+  getUserById,
 };
 
 async function createUser({ username, password, first_name, email }) {
@@ -145,6 +146,24 @@ async function getUser({ username, password }) {
       delete user.password;
       return user;
     }
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getUserById(userID) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+    SELECT * FROM users
+    WHERE id=$1;
+    `,
+      [userID]
+    );
+
+    return user;
   } catch (err) {
     throw err;
   }
