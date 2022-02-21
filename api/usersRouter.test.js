@@ -45,7 +45,7 @@ describe("/api/users endpoint", () => {
 
   it("POST /users creates a user and returns the new user object", async () => {
     const postUser = {
-      username: "post_userTest",
+      username: "post_userTest1",
       password: "123123123",
       first_name: "wally1",
       email: "wally@mail.com",
@@ -56,5 +56,17 @@ describe("/api/users endpoint", () => {
     const user = response.body.user;
     expect(user).toBeTruthy();
     expect(user.username).toEqual(postUser.username);
+  });
+
+  it("POST /login logs in a new users, checks password is match and returns token", async () => {
+    const loginUser = {
+      username: "albert",
+      password: "bertie99",
+    };
+
+    const response = await request.post("/api/users/login").send(loginUser);
+    expect(response.status).toBe(200);
+    const token = response.body.token;
+    expect(token).toBeTruthy();
   });
 });

@@ -50,7 +50,7 @@ usersRouter.post("/login", async (req, res, next) => {
       JWT_SECRET
     );
 
-    res.send({ token });
+    res.status(200).send({ token });
   } catch (error) {
     next(error);
   }
