@@ -3,6 +3,8 @@ const usersRouter = express.Router();
 const { User } = require("../db/models");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
+const authorizeUser = require("./auth");
+const { getUserById } = require("../db/models/users");
 
 module.exports = usersRouter;
 
@@ -50,7 +52,7 @@ usersRouter.post("/login", async (req, res, next) => {
       JWT_SECRET
     );
 
-    res.send({ token });
+    res.status(200).send({ token });
   } catch (error) {
     next(error);
   }
@@ -64,5 +66,14 @@ usersRouter.patch("/:id", async (req, res, next) => {
     res.status(204).send(user);
   } catch (err) {
     next(err);
+  }
+});
+
+usersRouter.get("/me", authorizeUser, async (req, res, next) => {
+  try {
+    const user = await getUserById(req.user.id);
+    res.send(user);
+  } catch (error) {
+    next(error);
   }
 });
