@@ -1,10 +1,10 @@
-const { server, handle } = require('../index');
-const { client } = require('../db');
-const { User } = require('../db');
-const supertest = require('supertest');
+const { server, handle } = require("../index");
+const { client } = require("../db");
+const { User } = require("../db");
+const supertest = require("supertest");
 const request = supertest(server);
 
-describe('/api/users endpoint', () => {
+describe("/api/users endpoint", () => {
   let createdUser;
   /* put the post user bucket here */
 
@@ -16,10 +16,10 @@ describe('/api/users endpoint', () => {
     await client.connect();
 
     const newUser = {
-      username: 'new user',
-      password: '123123123',
-      first_name: 'new user',
-      email: 'new-user@mail.com',
+      username: "new_userTest",
+      password: "123123123",
+      first_name: "new_userTest",
+      email: "wally@mail.com",
     };
 
     createdUser = await User.createUser(newUser);
@@ -35,26 +35,38 @@ describe('/api/users endpoint', () => {
     handle.close();
   });
 
-  it('GET /users returns all users with the new user added', async () => {
-    const response = await request.get('/api/users');
+  it("GET /users returns all users with the new user added", async () => {
+    const response = await request.get("/api/users");
     expect(response.status).toBe(200);
     const user = response.body.users[response.body.users.length - 1];
     expect(user).toBeTruthy();
     expect(user.email).toEqual(createdUser.email);
   });
 
-  it('POST /users creates a user and returns the new user object', async () => {
+  it("POST /users creates a user and returns the new user object", async () => {
     const postUser = {
-      username: 'post-user',
-      password: '123123123',
-      first_name: 'wally',
-      email: 'wally@mail.com',
+      username: "post_userTest1",
+      password: "123123123",
+      first_name: "wally1",
+      email: "wally@mail.com",
     };
 
-    const response = await request.post('/api/users/register').send(postUser);
+    const response = await request.post("/api/users/register").send(postUser);
     expect(response.status).toBe(201);
     const user = response.body.user;
     expect(user).toBeTruthy();
     expect(user.username).toEqual(postUser.username);
+  });
+
+  it("POST /login logs in a new users, checks password is match and returns token", async () => {
+    const loginUser = {
+      username: "albert",
+      password: "bertie99",
+    };
+
+    const response = await request.post("/api/users/login").send(loginUser);
+    expect(response.status).toBe(200);
+    const token = response.body.token;
+    expect(token).toBeTruthy();
   });
 });

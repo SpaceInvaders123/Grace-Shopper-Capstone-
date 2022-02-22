@@ -6,6 +6,9 @@ const {
   UserAddress,
   Category,
   Inventory,
+  OrderDetails,
+  OrderItems,
+  PaymentDetails,
   // declare your model imports here
   // for example, User
 } = require('./');
@@ -15,13 +18,13 @@ async function buildTables() {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS users, addresses, user_address, category, inventory, socks;
-    DROP TYPE IF EXISTS sock_style;
-
+    DROP TABLE IF EXISTS users, addresses, user_address, category, inventory, socks, order_details;
+    DROP TYPE IF EXISTS sock_style, payment_status;
     `);
     // build tables in correct order
     await client.query(`
       CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
+      CREATE TYPE payment_status AS ENUM('pending', 'settled', 'failed');
 
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -34,7 +37,7 @@ async function buildTables() {
 
       CREATE TABLE addresses (
         id SERIAL PRIMARY KEY,
-        adress_line VARCHAR(255) NOT NULL,
+        address_line VARCHAR(255) NOT NULL,
         state VARCHAR(2) NOT NULL,
         city VARCHAR(255) NOT NULL,
         zipcode VARCHAR(5) NOT NULL
@@ -68,6 +71,28 @@ async function buildTables() {
           product_img TEXT,                      
           created_at DATE DEFAULT now()
       );
+
+      CREATE TABLE order_details (
+        id SERIAL PRIMARY KEY, 
+        "user_id" INTEGER REFERENCES users (id),
+        total INTEGER,
+        created_at DATE DEFAULT now()
+      );
+
+      CREATE TABLE order_items (
+        id SERIAL PRIMARY KEY,
+        order_id INTEGER REFERENCES order_details (id),
+        product_id INTEGER REFERENCES socks (id),
+        quantity INTEGER NOT NULL,
+        created_at DATE DEFAULT now()
+      );
+
+      CREATE TABLE payment_details (
+        id SERIAL PRIMARY KEY,
+        order_id INTEGER REFERENCES order_details (id),
+        amount INTEGER,
+        status payment_status NOT NULL 
+      );
     `);
   } catch (error) {
     throw error;
@@ -99,10 +124,31 @@ const socksToCreate = [
 
 const addressesToCreate = [
   {
-    adress_line: '42 Wallaby Way',
+    address_line: '42 Wallaby Way',
     state: 'TX',
     city: 'Burleson',
     zipcode: '76028',
+  },
+];
+
+const orderDetailsToCreate = [
+  {
+    total: 500,
+    created_at: null,
+  },
+];
+
+const orderItemsToCreate = [
+  {
+    quantity: 10,
+    created_at: null,
+  },
+];
+
+const paymentDetailsToCreate = [
+  {
+    amount: 10,
+    payment_status: 'pending',
   },
 ];
 
@@ -136,12 +182,29 @@ async function populateInitialData() {
     const inventory = await Promise.all(
       inventoryToCreate.map(Inventory.createInventory)
     );
-
-    [users, socks, addresses, user_address, category, inventory].forEach(
-      (instance) => {
-        console.dir(instance, { depth: null });
-      }
+    const orderDetails = await Promise.all(
+      orderDetailsToCreate.map(OrderDetails.createOrderDetails)
     );
+    const orderItems = await Promise.all(
+      orderItemsToCreate.map(OrderItems.createOrderItems)
+    );
+    const paymentDetails = await Promise.all(
+      paymentDetailsToCreate.map(PaymentDetails.createPaymentDetails)
+    );
+
+    [
+      users,
+      socks,
+      addresses,
+      user_address,
+      category,
+      inventory,
+      orderDetails,
+      orderItems,
+      paymentDetails,
+    ].forEach((instance) => {
+      console.dir(instance, { depth: null });
+    });
 
     console.log('finished populating initial data!');
   } catch (error) {

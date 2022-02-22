@@ -1,10 +1,14 @@
-const express = require('express');
+const express = require("express");
 const usersRouter = express.Router();
-const { User } = require('../db/models');
+const { User } = require("../db/models");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = process.env;
+const authorizeUser = require("./auth");
+const { getUserById } = require("../db/models/users");
 
 module.exports = usersRouter;
 
-usersRouter.get('/', async (req, res, next) => {
+usersRouter.get("/", async (req, res, next) => {
   try {
     const users = await User.getAllUsers();
     res.send({
@@ -15,12 +19,12 @@ usersRouter.get('/', async (req, res, next) => {
   }
 });
 
-usersRouter.post('/register', async (req, res, next) => {
+usersRouter.post("/register", async (req, res, next) => {
   try {
     const { username, password, first_name, email } = req.body;
 
     if (password.length < 8) {
-      throw new Error('Password must be at least 8 characters!');
+      throw new Error("Password must be at least 8 characters!");
     }
 
     const user = await User.createUser({
@@ -36,7 +40,25 @@ usersRouter.post('/register', async (req, res, next) => {
   }
 });
 
-usersRouter.patch('/:id', async (req, res, next) => {
+usersRouter.post("/login", async (req, res, next) => {
+  try {
+    console.log(JWT_SECRET);
+    const { username, password } = req.body;
+
+    const user = await User.getUser({ username, password });
+
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      JWT_SECRET
+    );
+
+    res.status(200).send({ token });
+  } catch (error) {
+    next(error);
+  }
+});
+
+usersRouter.patch("/:id", async (req, res, next) => {
   try {
     const { username, first_name, email } = req.body;
     const updateFields = { username, first_name, email };
@@ -44,5 +66,14 @@ usersRouter.patch('/:id', async (req, res, next) => {
     res.status(204).send(user);
   } catch (err) {
     next(err);
+  }
+});
+
+usersRouter.get("/me", authorizeUser, async (req, res, next) => {
+  try {
+    const user = await getUserById(req.user.id);
+    res.send(user);
+  } catch (error) {
+    next(error);
   }
 });
