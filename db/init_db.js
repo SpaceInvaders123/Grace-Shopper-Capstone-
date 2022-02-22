@@ -148,7 +148,7 @@ const orderItemsToCreate = [
 const paymentDetailsToCreate = [
   {
     amount: 10,
-    payment_status: "pending",
+    status: "pending",
   },
 ];
 
