@@ -4,7 +4,7 @@ module.exports = {
   createAddresses,
   getAllAddresses,
   updateAddresses,
-  hardDeleteUser,
+  hardDeleteAddresses,
 };
 
 async function createAddresses({ address_line, state, city, zipcode }) {
@@ -69,7 +69,7 @@ async function updateAddresses(addressesId, updateFields) {
   }
 }
 
-async function hardDeleteUser(addressesId) {
+async function hardDeleteAddresses(addressesId) {
   try {
     await client.query(
       `
