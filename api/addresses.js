@@ -29,7 +29,7 @@ addressesRouter.post("/", async (req, res, next) => {
 });
 
 addressesRouter.patch(
-  "/:addressId",
+  "/:addressesId",
   [authorizeUser],
   async (req, res, next) => {
     try {
@@ -48,13 +48,17 @@ addressesRouter.patch(
   }
 );
 
-addressesRouter.delete("/:addressId", authorizeUser, async (req, res, next) => {
-  try {
-    const destroyAddress = await Address.hardDeleteAddresses(
-      req.params.addressId
-    );
-    res.send(destroyAddress);
-  } catch (err) {
-    next(err);
+addressesRouter.delete(
+  "/:addressesId",
+  authorizeUser,
+  async (req, res, next) => {
+    try {
+      const destroyAddress = await Address.hardDeleteAddresses(
+        req.params.addressId
+      );
+      res.send(destroyAddress);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
