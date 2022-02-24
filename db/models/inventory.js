@@ -1,6 +1,8 @@
-const client = require('../client');
+const client = require("../client");
 
-module.exports = { createInventory };
+module.exports = {
+  createInventory,
+};
 
 async function createInventory({ quantity }) {
   try {
