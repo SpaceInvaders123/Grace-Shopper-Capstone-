@@ -22,3 +22,18 @@ userAddressRouter.post("/", async (req, res, next) => {
     next(err);
   }
 });
+
+userAddressRouter.delete(
+  "/:userAddressId",
+  authorizeUser,
+  async (req, res, next) => {
+    try {
+      const destroy_userAddress = await hardDeleteUserAddress(
+        req.params.userAddressId
+      );
+      res.send(destroy_userAddress);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
