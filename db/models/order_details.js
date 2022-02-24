@@ -3,7 +3,8 @@ const client = require("../client");
 module.exports = {
   createOrderDetails,
   getAllOrderDetails,
-  destroyOrderDetails
+  destroyOrderDetails,
+  updateOrderDetails,
 };
 
 async function createOrderDetails({ total, created_at }) {
