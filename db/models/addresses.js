@@ -35,34 +35,18 @@ async function getAllAddresses() {
   }
 }
 
-async function updateAddresses(addressesId, updateFields) {
+async function updateAddresses({ id, address_line, state, city, zipcode }) {
   try {
-    console.log(Object.keys(updateFields).length);
-
-    //removes any undefined fields from our API req.body
-    for (const key in updateFields) {
-      if (updateFields[key] === undefined) {
-        delete updateFields[key];
-      }
-    }
-
-    const setString = Object.keys(updateFields)
-      .map((key, idx) => `${key} = $${idx + 2}`)
-      .join(", ");
-
-    console.log(setString);
-
     const {
       rows: [address],
     } = await client.query(
       `
     UPDATE addresses
-    SET ${setString}
-    WHERE id = $1
+    SET address_line=$1, state=$2, city=$4, zipcode=$4
+    WHERE id=$5
     RETURNING *;`,
-      [addressesId, ...Object.values(updateFields)]
+      [address_line, state, city, zipcode, id]
     );
-
     return address;
   } catch (err) {
     throw err;
