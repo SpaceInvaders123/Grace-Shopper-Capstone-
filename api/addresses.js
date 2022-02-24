@@ -1,13 +1,18 @@
 const express = require("express");
 const addressesRouter = express.Router();
-const { Address } = require("../db/models");
+const {
+  getAllAddresses,
+  createAddresses,
+  updateAddresses,
+  hardDeleteAddresses,
+} = require("../db/models/addresses");
 const authorizeUser = require("./auth");
 module.exports = addressesRouter;
 //Route works now. I resolved the issue
 addressesRouter.get("/", async (req, res, next) => {
   try {
-    const addresses = await Address.getAllAddresses();
-    res.send({ addresses });
+    const addresses = await getAllAddresses();
+    res.send(addresses);
   } catch (err) {
     next(err);
   }
@@ -16,7 +21,7 @@ addressesRouter.get("/", async (req, res, next) => {
 addressesRouter.post("/", async (req, res, next) => {
   try {
     const { address_line, state, city, zipcode } = req.body;
-    const addresses = await Address.createAddresses({
+    const addresses = await createAddresses({
       address_line,
       state,
       city,
@@ -34,14 +39,14 @@ addressesRouter.patch(
   async (req, res, next) => {
     try {
       const { address_line, state, city, zipcode } = req.body;
-      const address = await Address.updateAddresses({
-        id: req.params.addressId,
+      const addresses = await updateAddresses({
+        id: req.params.addressesId,
         address_line,
         state,
         city,
         zipcode,
       });
-      res.send(address);
+      res.send(addresses);
     } catch (err) {
       next(err);
     }
@@ -53,9 +58,7 @@ addressesRouter.delete(
   authorizeUser,
   async (req, res, next) => {
     try {
-      const destroyAddress = await Address.hardDeleteAddresses(
-        req.params.addressId
-      );
+      const destroyAddress = await hardDeleteAddresses(req.params.addressesId);
       res.send(destroyAddress);
     } catch (err) {
       next(err);
