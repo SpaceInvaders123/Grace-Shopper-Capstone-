@@ -38,3 +38,17 @@ orderDetailsRouter.delete("/:orderDetailsId", async (req, res, next) => {
         next(error);
     }
 });
+
+orderDetailsRouter.patch("/:orderDetailsId", async (req, res, next) => {
+    try {
+        const { total, created_at } = req.body;
+        const orderDetails = await updateOrderDetails({
+            id: req.params.orderDetailsId,
+            total,
+            created_at,
+        });
+        res.send(orderDetails);
+    } catch (error) {
+        next(error);
+    }
+});
