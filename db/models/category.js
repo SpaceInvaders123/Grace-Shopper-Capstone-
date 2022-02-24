@@ -28,7 +28,7 @@ async function createCategory({ style }) {
 async function getAllCategories() {
   try {
     const {
-      rows: [category],
+      rows: category,
     } = await client.query(
       `
         SELECT * FROM category;
@@ -65,7 +65,7 @@ async function updateCategory({id, style}) {
     } = await client.query(
       `
         UPDATE category
-        SET style=$1,
+        SET style=$1
         WHERE id=$2
         RETURNING *;
       `,
