@@ -16,7 +16,7 @@ async function createOrderDetails({ total, created_at }) {
         INSERT INTO order_details (total, created_at)
         VALUES ($1, $2)
         RETURNING *;
-        `,
+      `,
       [total, created_at]
     );
 
