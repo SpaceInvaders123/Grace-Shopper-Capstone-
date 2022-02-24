@@ -27,7 +27,7 @@ async function createAddresses({ address_line, state, city, zipcode }) {
 async function getAllAddresses() {
   try {
     const { rows: addresses } = await client.query(`
-    SELECT id, address_line, state, city, zipcode
+    SELECT *
     FROM addresses; `);
     return addresses;
   } catch (err) {
@@ -42,7 +42,7 @@ async function updateAddresses({ id, address_line, state, city, zipcode }) {
     } = await client.query(
       `
     UPDATE addresses
-    SET address_line=$1, state=$2, city=$4, zipcode=$4
+    SET address_line=$1, state=$2, city=$3, zipcode=$4
     WHERE id=$5
     RETURNING *;`,
       [address_line, state, city, zipcode, id]
@@ -55,16 +55,14 @@ async function updateAddresses({ id, address_line, state, city, zipcode }) {
 
 async function hardDeleteAddresses(addressesId) {
   try {
-    await client.query(
+    const { rows: address } = await client.query(
       `
     DELETE FROM addresses
-    WHERE id = $1; `,
+    WHERE id = $1
+    RETURNING *; `,
       [addressesId]
     );
-    return {
-      ok: true,
-      message: `address with id ${addressesId} was successfully deleted!`,
-    };
+    return address;
   } catch (err) {
     throw err;
   }
