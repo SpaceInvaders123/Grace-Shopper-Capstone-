@@ -20,7 +20,7 @@ orderItemsRouter.get("/", async (req, res, next) => {
 orderItemsRouter.post("/", async (req, res, next) => {
   try {
     const { quantity, created_at } = req.body;
-    const orderItems = await createSocks({
+    const orderItems = await createOrderItems({
       quantity,
       created_at,
     });
@@ -32,7 +32,7 @@ orderItemsRouter.post("/", async (req, res, next) => {
 
 orderItemsRouter.delete("/:orderItemsId", async (req, res, next) => {
   try {
-    const destroy_orderItems = await destroySock(req.params.orderItemsId);
+    const destroy_orderItems = await destroyOrderItems(req.params.orderItemsId);
     res.send(destroy_orderItems);
   } catch (error) {
     next(error);
