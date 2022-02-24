@@ -30,4 +30,11 @@ orderDetailsRouter.post("/", async (req, res, next) => {
     }
 });
 
-orderDetailsRouter.delete("/:orderDetailsId", async (req, res, next))
+orderDetailsRouter.delete("/:orderDetailsId", async (req, res, next) => {
+    try {
+        const destroy_orderDetails = await destroyOrderDetails();
+        res.send(destroy_orderDetails);
+    } catch (error) {
+        next(error);
+    }
+});
