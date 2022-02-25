@@ -15,7 +15,12 @@ inventoryRouter.get("/", async (req, res, next) => {
 
 inventoryRouter.post("/", async (req, res, next) => {
   try {
-    const inventory = await createInventory();
+    const { style, size } = req.body;
+    const inventory = await createInventory({
+      inventoryId: req.inventory.id,
+      style,
+      size,
+    });
     res.send(inventory);
   } catch (error) {
     next(error);
