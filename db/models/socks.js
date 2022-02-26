@@ -72,11 +72,6 @@ async function getAllSocks() {
 
 async function getSockById(sockId) {
   try {
-    // i need category and inventory with my sock
-    // where each of those ids reference another table
-    // so it's JOIN time :)
-    console.log({ sockId });
-
     const query = `
     SELECT 
     -- first, select everything from the sock record
@@ -148,29 +143,28 @@ async function updateSock(sockId, updateFields) {
     }
   }
 
-  // we're doing a plus 2 offset in our placeholder indices
-  // to account for position 1, which will go to our sockId
-  const setString = Object.keys(updateFields).map(
-    (key, idx) => `${key} = $${idx + 2}`
-  );
-
   try {
     // first we need to modify the inventory record
     // and we don't even need to check if it exists
     // because by definition we've already created an inventory record
     // every time we add a new sock to our db
-    const { quantity } = updateFields;
-
-    let updatedInventoryRecord;
+    const { quantity, inventory_id: inventoryId } = updateFields;
 
     if (quantity) {
-      updatedInventoryRecord = await updateInventory(inventoryId, quantity);
-      delete updateFields[quantity];
+      await updateInventory(inventoryId, quantity);
+      delete updateFields.quantity;
     }
 
-    const {
-      rows: [sock],
-    } = await client.query(
+    // we're doing a plus 2 offset in our placeholder indices
+    // to account for position 1, which will go to our sockId
+    const setString = Object.keys(updateFields).map(
+      (key, idx) => `${key} = $${idx + 2}`
+    );
+
+    // this isn't great, since i'm making multiple trips
+    // but, it's not a huge penalty for now...
+    // first, update the sock record
+    await client.query(
       `
         UPDATE socks
         SET ${setString}
@@ -180,8 +174,9 @@ async function updateSock(sockId, updateFields) {
       [sockId, ...Object.values(updateFields)]
     );
 
-    sock.inventory;
-
+    // second, grab the sock record via the getSockById adapter
+    // this will give us access to the JOIN fields like category, inventory
+    const sock = await getSockById(sockId);
     return sock;
   } catch (err) {
     throw err;

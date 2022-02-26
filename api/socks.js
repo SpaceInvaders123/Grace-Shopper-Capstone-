@@ -89,11 +89,12 @@ socksRouter.patch('/:sockId/inventory/:inventoryId', async (req, res, next) => {
     const { sockId, inventoryId } = req.params;
     const { quantity } = req.body;
 
-    const updatedSock = await Sock.updateSock({
-      id: sockId,
+    const updatedSock = await Sock.updateSock(sockId, {
       inventory_id: inventoryId,
       quantity,
     });
+
+    console.log({ updatedSock });
 
     // i think 204 is successful modification but check me on this :)
     res.status(204).send(updatedSock);

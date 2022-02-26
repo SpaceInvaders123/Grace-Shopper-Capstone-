@@ -128,6 +128,7 @@ const socksToCreate = [
     description:
       'A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ',
     product_img: 'sockPictureURL.com',
+    quantity: 100,
   },
 ];
 
@@ -165,12 +166,6 @@ const user_addressToCreate = [{ created_at: null }];
 
 const categoryToCreate = [{ style: 'no-show' }];
 
-const inventoryToCreate = [
-  {
-    quantity: 100,
-  },
-];
-
 async function populateInitialData() {
   // create useful starting data by leveraging your
   // Model.method() adapters to seed your db, for example:
@@ -184,9 +179,6 @@ async function populateInitialData() {
     // which means we have to create these records first
     const category = await Promise.all(
       categoryToCreate.map(Category.createCategory)
-    );
-    const inventory = await Promise.all(
-      inventoryToCreate.map(Inventory.createInventory)
     );
 
     const socks = await Promise.all(socksToCreate.map(Sock.createSocks));
@@ -214,7 +206,6 @@ async function populateInitialData() {
       addresses,
       user_address,
       category,
-      inventory,
       orderDetails,
       orderItems,
       paymentDetails,
