@@ -16,12 +16,13 @@ async function createSocks({
   description,
   product_img,
   created_at,
+  category_id,
   quantity, // this field is used to generate the inventory record FIRST
 }) {
   try {
     // we're doing this first, so that we can associate the inventory_id
     // that each new sock record requires
-    const inventoryRecord = await createInventory(quantity);
+    const inventoryRecord = await createInventory({ quantity });
 
     const {
       rows: [socks],
@@ -34,9 +35,10 @@ async function createSocks({
           description, 
           product_img, 
           created_at, 
+          category_id,
           inventory_id
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *;
         `,
       [
@@ -46,6 +48,7 @@ async function createSocks({
         description,
         product_img,
         created_at,
+        category_id,
         inventoryRecord.id,
       ]
     );
@@ -72,26 +75,40 @@ async function getSockById(sockId) {
     // i need category and inventory with my sock
     // where each of those ids reference another table
     // so it's JOIN time :)
+    console.log({ sockId });
+
+    const query = `
+    SELECT 
+    -- first, select everything from the sock record
+    socks.id,
+    socks.name,
+    socks.price,
+    socks.size,
+    socks.description,
+    socks.product_img,
+    socks.created_at,
+    -- next, build a new object from the category info
+    json_build_object(
+      'id', category.id,
+      'style', category.style
+    )
+    AS category,
+    -- finally, build a new object from the inventory info
+    json_build_object(
+      'id', inventory.id,
+      'quantity', inventory.quantity
+    )
+    AS inventory
+    FROM socks
+    JOIN category ON socks.category_id=category.id
+    JOIN inventory ON socks.inventory_id=inventory.id
+    WHERE socks.id=$1
+    GROUP BY socks.id, category.id, inventory.id;
+  ;`;
+
     const {
       rows: [sock],
-    } = await client.query(
-      `
-      SELECT 
-        socks.id,
-        name,
-        price,
-        size,
-        description,
-        product_img,
-        category.style,
-        inventory.quantity,
-      created_at FROM socks
-      JOIN category ON socks.category_id=category.id
-      JOIN inventory ON socks.inventory_id=inventory.id
-      WHERE socks.id=$1;
-    `,
-      [sockId]
-    );
+    } = await client.query(query, [sockId]);
 
     return sock;
   } catch (err) {

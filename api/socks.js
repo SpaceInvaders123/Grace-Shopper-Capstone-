@@ -6,7 +6,7 @@ const authorizeUser = require('./auth');
 
 socksRouter.get('/', async (req, res, next) => {
   try {
-    const socks = await getAllSocks();
+    const socks = await Sock.getAllSocks();
     res.send(socks);
   } catch (error) {
     next(error);
