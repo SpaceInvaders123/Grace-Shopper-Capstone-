@@ -1,23 +1,23 @@
 const client = require("../client");
 
-module.exports = { 
+module.exports = {
   createOrderItems,
   getAllOrderItems,
   destroyOrderItems,
   updateOrderItems,
 };
 
-async function createOrderItems({ quantity, created_at }) {
+async function createOrderItems({ quantity, price_paid, created_at }) {
   try {
     const {
       rows: [orderItems],
     } = await client.query(
-        `
-        INSERT INTO order_items (quantity, created_at)
-        VALUES ($1, $2)
+      `
+        INSERT INTO order_items (quantity, price_paid, created_at)
+        VALUES ($1, $2, $3)
         RETURNING *;
         `,
-      [quantity, created_at]
+      [quantity, price_paid, created_at]
     );
 
     return orderItems;
@@ -26,7 +26,7 @@ async function createOrderItems({ quantity, created_at }) {
   }
 }
 
-async function getAllOrderItems(){
+async function getAllOrderItems() {
   try {
     const { rows: orderItems } = await client.query(`
       SELECT * FROM order_items;
@@ -38,9 +38,10 @@ async function getAllOrderItems(){
   }
 }
 
-async function destroyOrderItems(orderItemsId){
+async function destroyOrderItems(orderItemsId) {
   try {
-    const { rows: orderItems } = await client.query(`
+    const { rows: orderItems } = await client.query(
+      `
       DELETE FROM order_items
       WHERE id=$1
       RETURNING *;
@@ -53,15 +54,16 @@ async function destroyOrderItems(orderItemsId){
   }
 }
 
-async function updateOrderItems({ quantity, created_at }) {
+async function updateOrderItems({ quantity, price_paid, created_at }) {
   try {
-    const {rows: orderItems} = await client.query(`
+    const { rows: orderItems } = await client.query(
+      `
       UPDATE order_items
-      SET quantity=$1, created_at=$2
-      WHERE id=$3
+      SET quantity=$1, price_paid=$2, created_at=$3
+      WHERE id=$4
       RETURNING *;
     `,
-      [quantity, created_at, id]
+      [quantity, price_paid, created_at, id]
     );
     return orderItems;
   } catch (error) {

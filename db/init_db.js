@@ -93,6 +93,7 @@ async function buildTables() {
         order_id INTEGER REFERENCES order_details (id),
         product_id INTEGER REFERENCES socks (id),
         quantity INTEGER NOT NULL,
+        price_paid INTEGER NOT NULL,
         created_at DATE DEFAULT now()
       );
 
@@ -126,11 +127,9 @@ const socksToCreate = [
     price: 500,
     size: "Large",
     description:
-
-      'A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ',
-    product_img: 'sockPictureURL.com',
+      "A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ",
+    product_img: "sockPictureURL.com",
     quantity: 100,
-
   },
 ];
 
@@ -153,6 +152,7 @@ const orderDetailsToCreate = [
 const orderItemsToCreate = [
   {
     quantity: 10,
+    price_paid: 200,
     created_at: null,
   },
 ];
@@ -166,10 +166,7 @@ const paymentDetailsToCreate = [
 
 const user_addressToCreate = [{ created_at: null }];
 
-
-
 const categoryToCreate = [{ style: "no-show" }];
-
 
 async function populateInitialData() {
   // create useful starting data by leveraging your
