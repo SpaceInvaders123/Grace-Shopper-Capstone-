@@ -154,7 +154,10 @@ const paymentDetailsToCreate = [
 
 const user_addressToCreate = [{ created_at: null }];
 
+
+
 const categoryToCreate = [{ style: "no-show" }];
+
 
 const inventoryToCreate = [
   {
