@@ -11,7 +11,7 @@ const {
   PaymentDetails,
   // declare your model imports here
   // for example, User
-} = require('./');
+} = require("./");
 
 async function buildTables() {
   try {
@@ -111,33 +111,35 @@ async function buildTables() {
 // store constants outside of the function
 const usersToCreate = [
   {
-    username: 'albert',
-    password: 'bertie99',
-    first_name: 'Alberto',
-    email: 'albert123@tets.com',
+    username: "albert",
+    password: "bertie99",
+    first_name: "Alberto",
+    email: "albert123@tets.com",
   },
 ];
 
 const socksToCreate = [
   {
-    name: 'Example Sock',
+    name: "Example Sock",
     category_id: 1,
     inventory_id: 1,
     price: 500,
-    size: 'Large',
+    size: "Large",
     description:
+
       'A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ',
     product_img: 'sockPictureURL.com',
     quantity: 100,
+
   },
 ];
 
 const addressesToCreate = [
   {
-    address_line: '42 Wallaby Way',
-    state: 'TX',
-    city: 'Burleson',
-    zipcode: '76028',
+    address_line: "42 Wallaby Way",
+    state: "TX",
+    city: "Burleson",
+    zipcode: "76028",
   },
 ];
 
@@ -158,20 +160,23 @@ const orderItemsToCreate = [
 const paymentDetailsToCreate = [
   {
     amount: 10,
-    status: 'pending',
+    status: "pending",
   },
 ];
 
 const user_addressToCreate = [{ created_at: null }];
 
-const categoryToCreate = [{ style: 'no-show' }];
+
+
+const categoryToCreate = [{ style: "no-show" }];
+
 
 async function populateInitialData() {
   // create useful starting data by leveraging your
   // Model.method() adapters to seed your db, for example:
   // const user1 = await User.createUser({ ...user info goes here... })
   try {
-    console.log('populating initial data!');
+    console.log("populating initial data!");
     const users = await Promise.all(usersToCreate.map(User.createUser));
 
     // these records are 1:1 with an existing sock
@@ -213,7 +218,7 @@ async function populateInitialData() {
       console.dir(instance, { depth: null });
     });
 
-    console.log('finished populating initial data!');
+    console.log("finished populating initial data!");
   } catch (error) {
     throw error;
   }
