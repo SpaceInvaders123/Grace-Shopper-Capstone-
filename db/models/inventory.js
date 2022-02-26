@@ -1,10 +1,10 @@
-const client = require("../client");
+const client = require('../client');
 
 module.exports = {
   createInventory,
 };
 
-async function createInventory({ quantity }) {
+async function createInventory(quantity) {
   try {
     const {
       rows: [inventory],
