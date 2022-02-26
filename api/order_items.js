@@ -19,9 +19,10 @@ orderItemsRouter.get("/", async (req, res, next) => {
 
 orderItemsRouter.post("/", async (req, res, next) => {
   try {
-    const { quantity, created_at } = req.body;
+    const { quantity, price_paid, created_at } = req.body;
     const orderItems = await createOrderItems({
       quantity,
+      price_paid,
       created_at,
     });
     res.send(orderItems);
@@ -41,10 +42,11 @@ orderItemsRouter.delete("/:orderItemsId", async (req, res, next) => {
 
 orderItemsRouter.patch("/:orderItemsId", async (req, res, next) => {
   try {
-    const { quantity, created_at } = req.body;
+    const { quantity, price_paid, created_at } = req.body;
     const orderItems = await updateOrderItems({
       id: req.params.orderItemsId,
       quantity,
+      price_paid,
       created_at,
     });
     res.send(orderItems);
