@@ -34,8 +34,4 @@ apiRouter.use('/user_address', userAddressRouter);
 const categoryRouter = require('./category');
 apiRouter.use('/category', categoryRouter);
 
-//inventory
-const inventoryRouter = require('./inventory');
-apiRouter.use('/inventory', inventoryRouter);
-
 module.exports = apiRouter;

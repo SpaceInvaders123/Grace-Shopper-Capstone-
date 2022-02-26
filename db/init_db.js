@@ -18,9 +18,18 @@ async function buildTables() {
     client.connect();
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS users, addresses, user_address, category, inventory, socks, order_details;
+    DROP TABLE IF EXISTS 
+      user_address, 
+      order_details,
+      category, 
+      inventory, 
+      socks, 
+      addresses, 
+      users; 
+    
     DROP TYPE IF EXISTS sock_style, payment_status;
     `);
+
     // build tables in correct order
     await client.query(`
       CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
@@ -45,8 +54,8 @@ async function buildTables() {
 
       CREATE TABLE user_address (
         id SERIAL PRIMARY KEY,
-        "user_id" INTEGER REFERENCES users (id),
-        "addresses_id" INTEGER REFERENCES addresses (id),
+        user_id INTEGER REFERENCES users (id),
+        addresses_id INTEGER REFERENCES addresses (id),
         created_at DATE DEFAULT now()
       );
 
@@ -62,8 +71,8 @@ async function buildTables() {
       
       CREATE TABLE socks (
           id SERIAL PRIMARY KEY,
-          "category_id" INTEGER REFERENCES category (id),
-          "inventory_id" INTEGER REFERENCES inventory (id),
+          category_id INTEGER REFERENCES category (id),
+          inventory_id INTEGER REFERENCES inventory (id),
           name VARCHAR(255) NOT NULL,
           price INTEGER NOT NULL, 
           size VARCHAR(50) NOT NULL,
@@ -74,7 +83,7 @@ async function buildTables() {
 
       CREATE TABLE order_details (
         id SERIAL PRIMARY KEY, 
-        "user_id" INTEGER REFERENCES users (id),
+        user_id INTEGER REFERENCES users (id),
         total INTEGER,
         created_at DATE DEFAULT now()
       );
@@ -117,8 +126,11 @@ const socksToCreate = [
     price: 500,
     size: "Large",
     description:
-      "A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ",
-    product_img: "sockPictureURL.com",
+
+      'A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ',
+    product_img: 'sockPictureURL.com',
+    quantity: 100,
+
   },
 ];
 
@@ -159,12 +171,6 @@ const user_addressToCreate = [{ created_at: null }];
 const categoryToCreate = [{ style: "no-show" }];
 
 
-const inventoryToCreate = [
-  {
-    quantity: 100,
-  },
-];
-
 async function populateInitialData() {
   // create useful starting data by leveraging your
   // Model.method() adapters to seed your db, for example:
@@ -172,19 +178,23 @@ async function populateInitialData() {
   try {
     console.log("populating initial data!");
     const users = await Promise.all(usersToCreate.map(User.createUser));
+
+    // these records are 1:1 with an existing sock
+    // so we should create them and then associate to a particular sock
+    // which means we have to create these records first
+    const category = await Promise.all(
+      categoryToCreate.map(Category.createCategory)
+    );
+
     const socks = await Promise.all(socksToCreate.map(Sock.createSocks));
+
     const addresses = await Promise.all(
       addressesToCreate.map(Address.createAddresses)
     );
     const user_address = await Promise.all(
       user_addressToCreate.map(UserAddress.createUserAddress)
     );
-    const category = await Promise.all(
-      categoryToCreate.map(Category.createCategory)
-    );
-    const inventory = await Promise.all(
-      inventoryToCreate.map(Inventory.createInventory)
-    );
+
     const orderDetails = await Promise.all(
       orderDetailsToCreate.map(OrderDetails.createOrderDetails)
     );
@@ -201,7 +211,6 @@ async function populateInitialData() {
       addresses,
       user_address,
       category,
-      inventory,
       orderDetails,
       orderItems,
       paymentDetails,
