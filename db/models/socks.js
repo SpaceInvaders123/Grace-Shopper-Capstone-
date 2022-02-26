@@ -150,16 +150,18 @@ async function updateSock(sockId, updateFields) {
     // every time we add a new sock to our db
     const { quantity, inventory_id: inventoryId } = updateFields;
 
-    if (quantity) {
+    if (!isNaN(+quantity)) {
       await updateInventory(inventoryId, quantity);
       delete updateFields.quantity;
     }
 
     // we're doing a plus 2 offset in our placeholder indices
     // to account for position 1, which will go to our sockId
-    const setString = Object.keys(updateFields).map(
-      (key, idx) => `${key} = $${idx + 2}`
-    );
+    const setString = Object.keys(updateFields)
+      .map((key, idx) => `${key} = $${idx + 2}`)
+      .join(',');
+
+    console.log({ setString });
 
     // this isn't great, since i'm making multiple trips
     // but, it's not a huge penalty for now...
