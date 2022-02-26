@@ -26,25 +26,26 @@ async function createOrderDetails({ total, created_at }) {
   }
 }
 
-async function getAllOrderDetails(){
+async function getAllOrderDetails() {
   try {
     const { rows: orderDetails } = await client.query(
-    `
+      `
       SELECT * FROM order_details;
-    `);
+    `
+    );
 
     return orderDetails;
   } catch (error) {
-    throw(error);
+    throw error;
   }
 }
 
 async function destroyOrderDetails(orderDetailsId) {
   try {
     const {
-      rows: [orderDetails]
+      rows: [orderDetails],
     } = await client.query(
-    `
+      `
       DELETE FROM order_details
       WHERE id=$1
       RETURNING *;
@@ -53,16 +54,16 @@ async function destroyOrderDetails(orderDetailsId) {
     );
     return orderDetails;
   } catch (error) {
-    throw(error);
+    throw error;
   }
 }
 
-async function updateOrderDetails({total, created_at}){
+async function updateOrderDetails({ id, total, created_at }) {
   try {
     const {
       rows: [orderDetails],
     } = await client.query(
-    `
+      `
       UPDATE order_details
       SET total=$1, created_at=$2
       WHERE id=$3
@@ -72,6 +73,6 @@ async function updateOrderDetails({total, created_at}){
     );
     return orderDetails;
   } catch (error) {
-    throw(error);
+    throw error;
   }
 }
