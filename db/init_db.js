@@ -12,6 +12,7 @@ const {
   // declare your model imports here
   // for example, User
 } = require("./");
+const { UserOrders } = require("./models");
 
 async function buildTables() {
   try {
@@ -163,6 +164,9 @@ const orderItemsToCreate = [
     created_at: null,
   },
 ];
+const userOrdersToCreate = {
+  //????????????????????
+};
 
 const paymentDetailsToCreate = [
   {
@@ -205,6 +209,10 @@ async function populateInitialData() {
     const orderItems = await Promise.all(
       orderItemsToCreate.map(OrderItems.createOrderItems)
     );
+    const user_orders = await Promise.all(
+      userOrdersToCreate.map(UserOrders.createUserOrders)
+    );
+
     const paymentDetails = await Promise.all(
       paymentDetailsToCreate.map(PaymentDetails.createPaymentDetails)
     );
@@ -217,6 +225,7 @@ async function populateInitialData() {
       category,
       orderDetails,
       orderItems,
+      user_orders,
       paymentDetails,
     ].forEach((instance) => {
       console.dir(instance, { depth: null });
