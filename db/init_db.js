@@ -27,13 +27,14 @@ async function buildTables() {
       addresses, 
       users; 
     
-    DROP TYPE IF EXISTS sock_style, payment_status;
+    DROP TYPE IF EXISTS sock_style, payment_status, order_status;
     `);
 
     // build tables in correct order
     await client.query(`
       CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
       CREATE TYPE payment_status AS ENUM('pending', 'settled', 'failed');
+      CREATE TYPE order_status AS ENUM('pending', 'settled');
 
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -83,18 +84,24 @@ async function buildTables() {
 
       CREATE TABLE order_details (
         id SERIAL PRIMARY KEY, 
-        user_id INTEGER REFERENCES users (id),
-        total INTEGER,
+        status order_status NOT NULL,
         created_at DATE DEFAULT now()
       );
 
       CREATE TABLE order_items (
         id SERIAL PRIMARY KEY,
         order_id INTEGER REFERENCES order_details (id),
-        product_id INTEGER REFERENCES socks (id),
+        socks_id INTEGER REFERENCES socks (id),
         quantity INTEGER NOT NULL,
         price_paid INTEGER NOT NULL,
         created_at DATE DEFAULT now()
+      );
+
+      CREATE TABLE user_orders (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users (id),
+        order_id INTEGER REFERENCES order_details (id),
+        UNIQUE(user_id, socks_id)
       );
 
       CREATE TABLE payment_details (
