@@ -54,7 +54,7 @@ async function destroyOrderItems(orderItemsId) {
   }
 }
 
-async function updateOrderItems({ quantity, price_paid, created_at }) {
+async function updateOrderItems({ id, quantity, price_paid, created_at }) {
   try {
     const { rows: orderItems } = await client.query(
       `

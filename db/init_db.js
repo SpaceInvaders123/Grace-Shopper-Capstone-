@@ -11,7 +11,8 @@ const {
   PaymentDetails,
   // declare your model imports here
   // for example, User
-} = require("./");
+} = require('./');
+const { UserOrders } = require('./models');
 
 async function buildTables() {
   try {
@@ -27,13 +28,14 @@ async function buildTables() {
       addresses, 
       users; 
     
-    DROP TYPE IF EXISTS sock_style, payment_status;
+    DROP TYPE IF EXISTS sock_style, payment_status, order_status;
     `);
 
     // build tables in correct order
     await client.query(`
       CREATE TYPE sock_style AS ENUM('no-show', 'quarter', 'knee-high');
       CREATE TYPE payment_status AS ENUM('pending', 'settled', 'failed');
+      CREATE TYPE order_status AS ENUM('pending', 'settled');
 
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -83,18 +85,24 @@ async function buildTables() {
 
       CREATE TABLE order_details (
         id SERIAL PRIMARY KEY, 
-        user_id INTEGER REFERENCES users (id),
-        total INTEGER,
+        status order_status NOT NULL,
         created_at DATE DEFAULT now()
       );
 
       CREATE TABLE order_items (
         id SERIAL PRIMARY KEY,
         order_id INTEGER REFERENCES order_details (id),
-        product_id INTEGER REFERENCES socks (id),
+        socks_id INTEGER REFERENCES socks (id),
         quantity INTEGER NOT NULL,
         price_paid INTEGER NOT NULL,
         created_at DATE DEFAULT now()
+      );
+
+      CREATE TABLE user_orders (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users (id),
+        order_id INTEGER REFERENCES order_details (id),
+        UNIQUE(user_id, socks_id)
       );
 
       CREATE TABLE payment_details (
@@ -112,68 +120,110 @@ async function buildTables() {
 // store constants outside of the function
 const usersToCreate = [
   {
-    username: "albert",
-    password: "bertie99",
-    first_name: "Alberto",
-    email: "albert123@tets.com",
+    username: 'albert',
+    password: 'bertie99',
+    first_name: 'Alberto',
+    email: 'albert123@tets.com',
   },
 ];
 
 const socksToCreate = [
   {
-    name: "Example Sock",
+    name: 'Amazing Sock',
     category_id: 1,
     inventory_id: 1,
     price: 500,
-    size: "Large",
+    size: 'Large',
     description:
-      "A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ",
-    product_img: "sockPictureURL.com",
+      'A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ',
+    product_img: 'sockPictureURL.com',
     quantity: 100,
+  },
+  {
+    name: 'Incredible Sock',
+    category_id: 1,
+    inventory_id: 1,
+    price: 750,
+    size: 'Medium',
+    description: 'im a sock yo',
+    product_img: 'sockPictureURL.com',
+    quantity: 80,
   },
 ];
 
 const addressesToCreate = [
   {
-    address_line: "42 Wallaby Way",
-    state: "TX",
-    city: "Burleson",
-    zipcode: "76028",
+    address_line: '42 Wallaby Way',
+    state: 'TX',
+    city: 'Burleson',
+    zipcode: '76028',
   },
 ];
 
 const orderDetailsToCreate = [
+  // this first order will be id 1 due to SERIAL PRIMARY KEY
   {
-    total: 500,
-    created_at: null,
+    status: 'pending',
+    created_at: new Date().toISOString(),
+  },
+  {
+    status: 'settled',
+    created_at: new Date().toISOString(),
   },
 ];
 
 const orderItemsToCreate = [
   {
+    order_id: 1,
+    socks_id: 1,
     quantity: 10,
     price_paid: 200,
     created_at: null,
+  },
+  {
+    order_id: 1,
+    socks_id: 2,
+    quantity: 10,
+    price_paid: 200,
+    created_at: null,
+  },
+  {
+    order_id: 2,
+    socks_id: 1,
+    quantity: 5,
+    price_paid: 300,
+    created_at: null,
+  },
+];
+const userOrdersToCreate = [
+  /* associate two orders with albert's id which is 1 */
+  {
+    user_id: 1,
+    order_id: 1,
+  },
+  {
+    user_id: 1,
+    order_id: 2,
   },
 ];
 
 const paymentDetailsToCreate = [
   {
     amount: 10,
-    status: "pending",
+    status: 'pending',
   },
 ];
 
 const user_addressToCreate = [{ created_at: null }];
 
-const categoryToCreate = [{ style: "no-show" }];
+const categoryToCreate = [{ style: 'no-show' }];
 
 async function populateInitialData() {
   // create useful starting data by leveraging your
   // Model.method() adapters to seed your db, for example:
   // const user1 = await User.createUser({ ...user info goes here... })
   try {
-    console.log("populating initial data!");
+    console.log('populating initial data!');
     const users = await Promise.all(usersToCreate.map(User.createUser));
 
     // these records are 1:1 with an existing sock
@@ -198,6 +248,10 @@ async function populateInitialData() {
     const orderItems = await Promise.all(
       orderItemsToCreate.map(OrderItems.createOrderItems)
     );
+    const user_orders = await Promise.all(
+      userOrdersToCreate.map(UserOrders.createUserOrders)
+    );
+
     const paymentDetails = await Promise.all(
       paymentDetailsToCreate.map(PaymentDetails.createPaymentDetails)
     );
@@ -210,12 +264,13 @@ async function populateInitialData() {
       category,
       orderDetails,
       orderItems,
+      user_orders,
       paymentDetails,
     ].forEach((instance) => {
       console.dir(instance, { depth: null });
     });
 
-    console.log("finished populating initial data!");
+    console.log('finished populating initial data!');
   } catch (error) {
     throw error;
   }
