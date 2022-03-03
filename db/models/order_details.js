@@ -8,17 +8,17 @@ module.exports = {
   getOrderDetailsByOrderId,
 };
 
-async function createOrderDetails({ total, created_at }) {
+async function createOrderDetails({ status, created_at }) {
   try {
     const {
       rows: [orderDetails],
     } = await client.query(
       `
-        INSERT INTO order_details (total, created_at)
+        INSERT INTO order_details (status, created_at)
         VALUES ($1, $2)
         RETURNING *;
       `,
-      [total, created_at]
+      [status, created_at]
     );
 
     return orderDetails;
@@ -73,18 +73,18 @@ async function destroyOrderDetails(orderDetailsId) {
   }
 }
 
-async function updateOrderDetails({ id, total, created_at }) {
+async function updateOrderDetails({ id, status, created_at }) {
   try {
     const {
       rows: [orderDetails],
     } = await client.query(
       `
       UPDATE order_details
-      SET total=$1, created_at=$2
+      SET status=$1, created_at=$2
       WHERE id=$3
       RETURNING *;
     `,
-      [total, created_at, id]
+      [status, created_at, id]
     );
     return orderDetails;
   } catch (error) {

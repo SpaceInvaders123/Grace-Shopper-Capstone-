@@ -5,8 +5,11 @@ module.exports = { getUserOrdersByUserId };
 //???
 //Unsure how to go about creating a userOrders table
 //Only value is Id everything else is a FK reference
-async function createUserOrders() {
+async function createUserOrders(userId, orderId) {
   try {
+    /* INSERT INTO user_orders (user_id, order_id)
+       VALUES ($1, $2)
+       RETURNING *; */
   } catch (err) {
     throw err;
   }
