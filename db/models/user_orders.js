@@ -1,4 +1,4 @@
-const { User, UserOrders, OrderDetails } = require('.');
+const { getOrderDetailsByOrderId } = require('./order_details');
 const client = require('../client');
 module.exports = { getUserOrdersByUserId };
 
@@ -38,9 +38,7 @@ async function getUserOrdersByUserId(userId) {
       const userOrder = userOrders[i];
 
       // this needs to be implemented in the OrderDetails adapter
-      const orderDetails = await OrderDetails.getOrderDetailsByOrderId(
-        userOrder.order_id
-      );
+      const orderDetails = await getOrderDetailsByOrderId(userOrder.order_id);
 
       userOrder.products = orderDetails;
     }

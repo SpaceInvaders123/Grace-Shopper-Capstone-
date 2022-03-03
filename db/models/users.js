@@ -1,7 +1,7 @@
 // grab our db client connection to use with our adapters
 const client = require('../client');
 const bcrypt = require('bcrypt');
-const { UserOrders } = require('../models');
+const { getUserOrdersByUserId } = require('./user_orders');
 
 module.exports = {
   // add your database adapter fns here
@@ -165,7 +165,7 @@ async function getUserById(userID) {
       [userID]
     );
 
-    const userOrders = await UserOrders.getUserOrdersByUserId(userID);
+    const userOrders = await getUserOrdersByUserId(userID);
     user.orders = userOrders;
     return user;
   } catch (err) {
