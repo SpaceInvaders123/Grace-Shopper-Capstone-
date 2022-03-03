@@ -1,5 +1,5 @@
-const { User, UserOrders } = require(".");
-const client = require("../client");
+const { User, UserOrders, OrderDetails } = require('.');
+const client = require('../client');
 module.exports = { getUserOrdersByUserId };
 
 //???
@@ -20,19 +20,38 @@ async function createUserOrders() {
 
 async function getUserOrdersByUserId(userId) {
   try {
-    const user = await User.getUserById(userId);
-    const userOrders = await UserOrders.getUserOrdersByUserId(userId);
-    const {
-      rows: [userOrder],
-    } = await client.query(
+    const { rows: userOrders } = await client.query(
       `
     SELECT * FROM users
     JOIN user_orders ON user_orders.user_id = users.id
-    JOIN order_details ON order_details.id = user_orders.order_id 
     WHERE users.id = $1;`,
-      [user, userOrders, userId]
+      [userId]
     );
-    return userOrder;
+
+    for (let i = 0; i < userOrders.length; i++) {
+      // how do we get products associated with this order?
+      // easy :) we do an n + 1 query on the userOrders[i]
+
+      const userOrder = userOrders[i];
+
+      // this needs to be implemented in the OrderDetails adapter
+      const orderDetails = await OrderDetails.getOrderDetailsByOrderId(
+        userOrder.order_id
+      );
+
+      userOrder.products = orderDetails;
+    }
+
+    /* 
+      {
+        orderId: 1,
+        status: 'pending'
+        date: ...timestamp
+        products: [ {  ...order detail record, quantity, pricepaid } ]
+      }
+    */
+
+    return userOrders;
   } catch (err) {
     throw err;
   }

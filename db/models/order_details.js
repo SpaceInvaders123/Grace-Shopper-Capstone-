@@ -1,10 +1,11 @@
-const client = require("../client");
+const client = require('../client');
 
 module.exports = {
   createOrderDetails,
   getAllOrderDetails,
   destroyOrderDetails,
   updateOrderDetails,
+  getOrderDetailsByOrderId,
 };
 
 async function createOrderDetails({ total, created_at }) {
@@ -37,6 +38,20 @@ async function getAllOrderDetails() {
     return orderDetails;
   } catch (error) {
     throw error;
+  }
+}
+
+// this gets us products
+async function getOrderDetailsByOrderId(orderId) {
+  try {
+    /* write a SQL query to grab this order details object and return it */
+    /* 
+      SELECT * FROM order_details
+      JOIN order_items ON order_items.order_id = order_details.id
+      WHERE order_details.id = 1;
+    */
+  } catch (err) {
+    throw err;
   }
 }
 
