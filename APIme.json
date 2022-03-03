@@ -1,0 +1,58 @@
+{
+  "id": 1,
+  "username": "albert",
+  "first_name": "Alberto",
+  "email": "albert123@tets.com",
+  "deleted_at": null,
+  "orders": [
+    {
+      "id": 1,
+      "username": "albert",
+      "first_name": "Alberto",
+      "email": "albert123@tets.com",
+      "deleted_at": null,
+      "user_id": 1,
+      "order_id": 1,
+      "products": [
+        {
+          "id": 1,
+          "status": "pending",
+          "created_at": null,
+          "order_id": 1,
+          "socks_id": 1,
+          "quantity": 10,
+          "price_paid": 200
+        },
+        {
+          "id": 2,
+          "status": "pending",
+          "created_at": null,
+          "order_id": 1,
+          "socks_id": 2,
+          "quantity": 10,
+          "price_paid": 200
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "username": "albert",
+      "first_name": "Alberto",
+      "email": "albert123@tets.com",
+      "deleted_at": null,
+      "user_id": 1,
+      "order_id": 2,
+      "products": [
+        {
+          "id": 3,
+          "status": "settled",
+          "created_at": null,
+          "order_id": 2,
+          "socks_id": 1,
+          "quantity": 5,
+          "price_paid": 300
+        }
+      ]
+    }
+  ]
+}
