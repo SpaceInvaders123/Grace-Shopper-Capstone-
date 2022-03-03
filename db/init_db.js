@@ -11,8 +11,8 @@ const {
   PaymentDetails,
   // declare your model imports here
   // for example, User
-} = require('./');
-const { UserOrders } = require('./models');
+} = require("./");
+const { UserOrders } = require("./models");
 
 async function buildTables() {
   try {
@@ -102,7 +102,7 @@ async function buildTables() {
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users (id),
         order_id INTEGER REFERENCES order_details (id),
-        UNIQUE(user_id, socks_id)
+        UNIQUE(user_id, order_id)
       );
 
       CREATE TABLE payment_details (
@@ -120,76 +120,76 @@ async function buildTables() {
 // store constants outside of the function
 const usersToCreate = [
   {
-    username: 'albert',
-    password: 'bertie99',
-    first_name: 'Alberto',
-    email: 'albert123@tets.com',
+    username: "albert",
+    password: "bertie99",
+    first_name: "Alberto",
+    email: "albert123@tets.com",
   },
 ];
 
 const socksToCreate = [
   {
-    name: 'Amazing Sock',
+    name: "Amazing Sock",
     category_id: 1,
     inventory_id: 1,
     price: 500,
-    size: 'Large',
+    size: "Large",
     description:
-      'A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ',
-    product_img: 'sockPictureURL.com',
+      "A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ",
+    product_img: "sockPictureURL.com",
     quantity: 100,
   },
   {
-    name: 'Incredible Sock',
+    name: "Incredible Sock",
     category_id: 1,
     inventory_id: 1,
     price: 750,
-    size: 'Medium',
-    description: 'im a sock yo',
-    product_img: 'sockPictureURL.com',
+    size: "Medium",
+    description: "im a sock yo",
+    product_img: "sockPictureURL.com",
     quantity: 80,
   },
 ];
 
 const addressesToCreate = [
   {
-    address_line: '42 Wallaby Way',
-    state: 'TX',
-    city: 'Burleson',
-    zipcode: '76028',
+    address_line: "42 Wallaby Way",
+    state: "TX",
+    city: "Burleson",
+    zipcode: "76028",
   },
 ];
 
 const orderDetailsToCreate = [
   // this first order will be id 1 due to SERIAL PRIMARY KEY
   {
-    status: 'pending',
+    status: "pending",
     created_at: new Date().toISOString(),
   },
   {
-    status: 'settled',
+    status: "settled",
     created_at: new Date().toISOString(),
   },
 ];
 
 const orderItemsToCreate = [
   {
-    order_id: 1,
-    socks_id: 1,
+    orderId: 1,
+    socksId: 1,
     quantity: 10,
     price_paid: 200,
     created_at: null,
   },
   {
-    order_id: 1,
-    socks_id: 2,
+    orderId: 1,
+    socksId: 2,
     quantity: 10,
     price_paid: 200,
     created_at: null,
   },
   {
-    order_id: 2,
-    socks_id: 1,
+    orderId: 2,
+    socksId: 1,
     quantity: 5,
     price_paid: 300,
     created_at: null,
@@ -198,32 +198,32 @@ const orderItemsToCreate = [
 const userOrdersToCreate = [
   /* associate two orders with albert's id which is 1 */
   {
-    user_id: 1,
-    order_id: 1,
+    userId: 1,
+    orderId: 1,
   },
   {
-    user_id: 1,
-    order_id: 2,
+    userId: 1,
+    orderId: 2,
   },
 ];
 
 const paymentDetailsToCreate = [
   {
     amount: 10,
-    status: 'pending',
+    status: "pending",
   },
 ];
 
 const user_addressToCreate = [{ created_at: null }];
 
-const categoryToCreate = [{ style: 'no-show' }];
+const categoryToCreate = [{ style: "no-show" }];
 
 async function populateInitialData() {
   // create useful starting data by leveraging your
   // Model.method() adapters to seed your db, for example:
   // const user1 = await User.createUser({ ...user info goes here... })
   try {
-    console.log('populating initial data!');
+    console.log("populating initial data!");
     const users = await Promise.all(usersToCreate.map(User.createUser));
 
     // these records are 1:1 with an existing sock
@@ -270,7 +270,7 @@ async function populateInitialData() {
       console.dir(instance, { depth: null });
     });
 
-    console.log('finished populating initial data!');
+    console.log("finished populating initial data!");
   } catch (error) {
     throw error;
   }

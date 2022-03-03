@@ -1,15 +1,23 @@
-const { getOrderDetailsByOrderId } = require('./order_details');
-const client = require('../client');
-module.exports = { getUserOrdersByUserId };
+const { getOrderDetailsByOrderId } = require("./order_details");
+const client = require("../client");
+module.exports = { getUserOrdersByUserId, createUserOrders };
 
 //???
 //Unsure how to go about creating a userOrders table
 //Only value is Id everything else is a FK reference
-async function createUserOrders(userId, orderId) {
+async function createUserOrders({ userId, orderId }) {
   try {
-    /* INSERT INTO user_orders (user_id, order_id)
+    console.log(userId, orderId);
+    const {
+      rows: [userOrder],
+    } = await client.query(
+      `
+      INSERT INTO user_orders (user_id, order_id)
        VALUES ($1, $2)
-       RETURNING *; */
+       RETURNING *;`,
+      [userId, orderId]
+    );
+    return userOrder;
   } catch (err) {
     throw err;
   }
@@ -30,6 +38,7 @@ async function getUserOrdersByUserId(userId) {
     WHERE users.id = $1;`,
       [userId]
     );
+    console.log(userOrders);
 
     for (let i = 0; i < userOrders.length; i++) {
       // how do we get products associated with this order?

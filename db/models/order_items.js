@@ -7,17 +7,23 @@ module.exports = {
   updateOrderItems,
 };
 
-async function createOrderItems({ quantity, price_paid, created_at }) {
+async function createOrderItems({
+  orderId,
+  socksId,
+  quantity,
+  price_paid,
+  created_at,
+}) {
   try {
     const {
       rows: [orderItems],
     } = await client.query(
       `
-        INSERT INTO order_items (quantity, price_paid, created_at)
-        VALUES ($1, $2, $3)
+        INSERT INTO order_items (order_id, socks_id, quantity, price_paid, created_at)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING *;
         `,
-      [quantity, price_paid, created_at]
+      [orderId, socksId, quantity, price_paid, created_at]
     );
 
     return orderItems;

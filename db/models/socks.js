@@ -1,5 +1,5 @@
-const client = require('../client');
-const { createInventory, updateInventory } = require('./inventory');
+const client = require("../client");
+const { createInventory, updateInventory } = require("./inventory");
 
 module.exports = {
   createSocks,
@@ -148,10 +148,14 @@ async function updateSock(sockId, updateFields) {
     // and we don't even need to check if it exists
     // because by definition we've already created an inventory record
     // every time we add a new sock to our db
-    const { quantity, inventory_id: inventoryId } = updateFields;
+    const {
+      quantity,
+      inventory_id: inventoryId,
+      category_id: categoryId,
+    } = updateFields;
 
     if (!isNaN(+quantity)) {
-      await updateInventory(inventoryId, quantity);
+      await updateInventory(inventoryId, categoryId, quantity);
       delete updateFields.quantity;
     }
 
@@ -159,7 +163,7 @@ async function updateSock(sockId, updateFields) {
     // to account for position 1, which will go to our sockId
     const setString = Object.keys(updateFields)
       .map((key, idx) => `${key} = $${idx + 2}`)
-      .join(',');
+      .join(",");
 
     console.log({ setString });
 
