@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
 import { getAPIHealth } from '../axios-services';
+import Footer from './Footer';
 import '../style/App.css';
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
     <div className="app-container">
       <h1>Hello, World!</h1>
       <p>API Status: {APIHealth}</p>
+      <Footer />
     </div>
   );
 };
