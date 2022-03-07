@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import API from "./components/API";
 import SignUp from "./components/SignUp";
+import Login from "./components/Login";
 
 /* This component uses this Switch component from React-Router that 
 renders the first matching route that is defined within it. 
@@ -23,6 +24,9 @@ export default function Routes() {
       </Route>
       <Route exact path="/signup">
         <SignUp />
+      </Route>
+      <Route exact path="/login">
+        <Login />
       </Route>
     </Switch>
   );
