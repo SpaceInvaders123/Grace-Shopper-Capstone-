@@ -10,7 +10,7 @@ const SockCard = ({ sock }) => {
           <div className="card-sockprice">${sock.price}</div>
         </div>
       </div>
-      <img className="card-image" src={sock.name} alt={sock.name} />
+      <img className="card-image" src={sock.product_img} alt={sock.name} />
 
       <div className="card-sockdescription">{sock.description}</div>
     </div>

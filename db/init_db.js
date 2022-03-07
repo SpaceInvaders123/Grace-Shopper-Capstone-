@@ -136,7 +136,8 @@ const socksToCreate = [
     size: "Large",
     description:
       "A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ",
-    product_img: "sockPictureURL.com",
+    product_img:
+      "https://media.happysocks.com/catalog/product/m/a/magentoimage_ezwo81il49pzpswo.png?width=960&format=pjpg&quality=60&auto=webp&bg-color=fafafa",
     quantity: 100,
   },
   {
@@ -146,7 +147,8 @@ const socksToCreate = [
     price: 750,
     size: "Medium",
     description: "im a sock yo",
-    product_img: "sockPictureURL.com",
+    product_img:
+      "https://media.happysocks.com/catalog/product/m/a/magentoimage_9bbctreia9g5zlss.png?width=960&format=pjpg&quality=60&auto=webp&bg-color=fafafa",
     quantity: 80,
   },
 ];
