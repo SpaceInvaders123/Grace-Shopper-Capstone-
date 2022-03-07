@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
 import Navbar from "react-bootstrap/Navbar";
+import Routes from "../Routes";
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -24,13 +25,14 @@ const App = () => {
   }, []);
 
   return (
-    <div className="app-container">
+    <div className="App container py-3">
       <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
         <Navbar.Brand className="font-weight-bold text-muted">
-          Scratch
+          Socks4u
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar>
+      <Routes />
       <h1>Hello, World!</h1>
       <p>API Status: {APIHealth}</p>
     </div>

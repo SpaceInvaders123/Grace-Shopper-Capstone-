@@ -1,17 +1,16 @@
 /* import fonts here */
 
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 
-:root {
-  /* define variables here */
+/* :root {
   --green: green;
   --red: red;
   --blue: blue;
-}
+} */
 
-html {
+/* html {
   touch-action: manipulation;
 }
 
@@ -20,4 +19,24 @@ body {
   padding: 0;
   height: 100vh;
   width: 100vw;
+}
+ */
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #333;
+  font-size: 16px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Open Sans", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "PT Serif", serif;
 }
