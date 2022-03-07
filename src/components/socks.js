@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SockTile from "./sockCard";
+import SockCard from "./SockCard";
 
 const Products = () => {
   const [socks, setSocks] = useState([]);
@@ -18,7 +18,7 @@ const Products = () => {
     <div>
       {socks.map((sock) => {
         console.log(sock);
-        return <SockTile sock={sock} />;
+        return <SockCard sock={sock} key={sock.id} />;
       })}
     </div>
   );
