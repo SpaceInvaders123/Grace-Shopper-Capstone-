@@ -12,7 +12,7 @@ const App = () => {
   return (
     <div className="App container py-3">
       <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
-        <Navbar.Brand className="font-weight-bold text-muted">
+        <Navbar.Brand href="/" className="font-weight-bold text-muted">
           Socks4u
         </Navbar.Brand>
         <Navbar.Toggle />

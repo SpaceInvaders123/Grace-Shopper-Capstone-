@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAPIHealth } from "../axios-services";
+import "../style/API.css";
 
 const API = () => {
   const [APIHealth, setAPIHealth] = useState("");
