@@ -12,22 +12,20 @@ const Footer = () => {
   return (
     <Box>
       <h1 style={{ color: "green", textAlign: "center", marginTop: "-50px" }}>
-        Socks Shop
+        Socks
       </h1>
       <Container>
         <Row>
           <Column>
             <Heading>About Us</Heading>
-            <FooterLink href="#">Aim</FooterLink>
-            <FooterLink href="#">Vision</FooterLink>
-            <FooterLink href="#">Testimonials</FooterLink>
+            <FooterLink>Our Mission</FooterLink>
+            <FooterLink>Our Story</FooterLink>
           </Column>
           <Column>
-            <Heading>Services</Heading>
-            <FooterLink href="#">Writing</FooterLink>
-            <FooterLink href="#">Internships</FooterLink>
-            <FooterLink href="#">Coding</FooterLink>
-            <FooterLink href="#">Teaching</FooterLink>
+            <Heading>Products</Heading>
+            <FooterLink>No Show</FooterLink>
+            <FooterLink>Quarter</FooterLink>
+            <FooterLink>Knee High</FooterLink>
           </Column>
           <Column>
             <Heading>Contact Us</Heading>
@@ -55,13 +53,6 @@ const Footer = () => {
               <i className="twitter">
                 <span style={{ marginLeft: "10px" }}>
                   Twitter
-                </span>
-              </i>
-            </FooterLink>
-            <FooterLink href="#">
-              <i className="youtube">
-                <span style={{ marginLeft: "10px" }}>
-                  Youtube
                 </span>
               </i>
             </FooterLink>
