@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import SockCard from "./SockCard";
 import "../style/Home.css";
+import Footer from "./Footer";
 
 export default function Home() {
   const [socks, setSocks] = useState([]);
-  const URL = "http://localhost:4000/api/socks";
+  const URL = "http://grace-shopper-space.herokuapp.com/api/socks";
   async function fetchSocks(url) {
     const socks = await fetch(url);
     return await socks.json();
