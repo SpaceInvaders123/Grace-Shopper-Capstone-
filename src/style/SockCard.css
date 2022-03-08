@@ -4,39 +4,49 @@ body {
   margin: 0;
   font-family: "Muli", sans-serif;
   background: #ddd;
+  justify-content: space-evenly;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.containercard {
+  float: left;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .card {
   background-color: white;
   color: #272727;
+  box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-radius: 10px;
   border: 0px;
-  border-color: tomato;
+  border-color: #159a9c;
   border-style: solid;
   transition: 200ms;
   max-width: 380px;
-  padding: 0.5em;
-  margin-bottom: 0.9em;
+  margin: 5px 10px;
+  flex-basis: 200px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card:hover {
   transition: 200ms;
   border: 3px;
-  border-color: tomato;
+  border-color: #deefe7;
   border-style: solid;
 }
 
 .card-header {
   display: flex;
+  justify-content: space-between;
   flex-wrap: nowrap;
   align-items: center;
-}
-
-.card-group {
-  justify-content: center;
+  color: #002333;
 }
 
 .card-sockname {
@@ -45,10 +55,15 @@ body {
   margin-bottom: 0;
   margin-top: 0;
 }
+
 .card-sockprice {
   flex: 0.3;
-  font-size: small;
+  font-size: medium;
+  font-weight: 600;
+  color: #159a9c;
+  letter-spacing: 0.1em;
   margin-top: 0;
+  justify-content: flex-end;
 }
 
 .card-image {

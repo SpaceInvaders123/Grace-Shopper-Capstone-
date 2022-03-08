@@ -15,8 +15,10 @@ export default function Home() {
   return (
     <div className="Home">
       <div className="lander">
-        <h1>Socks4u</h1>
         <p className="text-muted">The Space-Invaders Present</p>
+        <img src={require("../style/socks4you.png")} height="100" />
+        <br />
+        <br />
         <div>
           {socks.map((sock) => {
             return <SockCard sock={sock} key={sock.id} />;

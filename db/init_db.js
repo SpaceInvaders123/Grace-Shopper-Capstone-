@@ -132,21 +132,35 @@ const socksToCreate = [
     name: "Amazing Sock",
     category_id: 1,
     inventory_id: 1,
-    price: 500,
+    price: 50,
     size: "Large",
     description:
       "A a garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon ",
-    product_img: "sockPictureURL.com",
+    product_img:
+      "https://media.happysocks.com/catalog/product/m/a/magentoimage_ezwo81il49pzpswo.png?width=960&format=pjpg&quality=60&auto=webp&bg-color=fafafa",
     quantity: 100,
   },
   {
     name: "Incredible Sock",
     category_id: 1,
     inventory_id: 1,
-    price: 750,
+    price: 75,
     size: "Medium",
     description: "im a sock yo",
-    product_img: "sockPictureURL.com",
+    product_img:
+      "https://media.happysocks.com/catalog/product/m/a/magentoimage_9bbctreia9g5zlss.png?width=960&format=pjpg&quality=60&auto=webp&bg-color=fafafa",
+    quantity: 80,
+  },
+  {
+    name: "Smiley Sock",
+    category_id: 1,
+    inventory_id: 1,
+    price: 25,
+    size: "Medium",
+    description:
+      "Smiling is a chain reaction! This contagious design guarantees to put anyone who looks at you in a good mood.",
+    product_img:
+      "https://media.happysocks.com/catalog/product/m/a/magentoimage_izzfy7u3urz9lr3v.png?width=320&format=pjpg&quality=70&auto=webp&bg-color=fafafa",
     quantity: 80,
   },
 ];
