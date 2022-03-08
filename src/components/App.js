@@ -32,8 +32,8 @@ const App = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Footer />
       <Routes />
+      <Footer />
     </div>
   );
 };

@@ -11,16 +11,11 @@ import {
 const Footer = () => {
   return (
     <Box>
-      <h1 style={{ color: "green", textAlign: "center", marginTop: "-50px" }}>
-        Socks
+      <h1 style={{ color: "red", textAlign: "center", marginTop: "0px" }}>
+        Socks4u
       </h1>
       <Container>
         <Row>
-          <Column>
-            <Heading>About Us</Heading>
-            <FooterLink>Our Mission</FooterLink>
-            <FooterLink>Our Story</FooterLink>
-          </Column>
           <Column>
             <Heading>Products</Heading>
             <FooterLink>No Show</FooterLink>

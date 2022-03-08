@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css?family=Muli:400,400i,700,700i");
+
+body {
+  margin: 0;
+  font-family: "Muli", sans-serif;
+  background: #ddd;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.card {
+  background-color: white;
+  color: #272727;
+  padding: 20px;
+  border-radius: 10px;
+  border: 0px;
+  border-color: tomato;
+  border-style: solid;
+  transition: 200ms;
+  max-width: 380px;
+  padding: 0.5em;
+  margin-bottom: 0.9em;
+}
+
+.card:hover {
+  transition: 200ms;
+  border: 3px;
+  border-color: tomato;
+  border-style: solid;
+}
+
+.card-header {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.card-group {
+  justify-content: center;
+}
+
+.card-sockname {
+  flex: 0.5;
+  font-size: large;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.card-sockprice {
+  flex: 0.3;
+  font-size: small;
+  margin-top: 0;
+}
+
+.card-image {
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  max-width: 300px;
+  padding-left: 45px;
+}
+
+.card-sockdescription {
+  width: 350px;
+  font-size: medium;
+  padding-right: 35px;
+}
