@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SockCard from "./SockCard";
 import "../style/Home.css";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function Home() {
   const [socks, setSocks] = useState([]);
@@ -20,9 +22,11 @@ export default function Home() {
         <br />
         <br />
         <div>
-          {socks.map((sock) => {
-            return <SockCard sock={sock} key={sock.id} />;
-          })}
+          <Row xs={1} md={3} className="g-4">
+            {socks.map((sock) => {
+              return <SockCard sock={sock} key={sock.id} />;
+            })}{" "}
+          </Row>
         </div>
       </div>
     </div>
