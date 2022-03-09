@@ -143,7 +143,7 @@ const socksToCreate = [
   {
     name: "Incredible Sock",
     category_id: 1,
-    inventory_id: 1,
+    inventory_id: 2,
     price: 75,
     size: "Medium",
     description: "im a sock yo",
@@ -154,7 +154,7 @@ const socksToCreate = [
   {
     name: "Smiley Sock",
     category_id: 1,
-    inventory_id: 1,
+    inventory_id: 3,
     price: 25,
     size: "Medium",
     description:
