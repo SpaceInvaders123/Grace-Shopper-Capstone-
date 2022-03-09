@@ -26,7 +26,7 @@ body {
   border-color: #159a9c;
   border-style: solid;
   transition: 200ms;
-  max-width: 380px;
+  min-width: 300px;
   margin: 5px 10px;
   flex-basis: 200px;
   flex-grow: 1;
@@ -41,21 +41,6 @@ body {
   border-style: solid;
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  align-items: center;
-  color: #002333;
-}
-
-.card-sockname {
-  flex: 0.5;
-  font-size: large;
-  margin-bottom: 0;
-  margin-top: 0;
-}
-
 .card-sockprice {
   flex: 0.3;
   font-size: medium;
@@ -64,18 +49,4 @@ body {
   letter-spacing: 0.1em;
   margin-top: 0;
   justify-content: flex-end;
-}
-
-.card-image {
-  border-radius: 10px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  max-width: 300px;
-  padding-left: 45px;
-}
-
-.card-sockdescription {
-  width: 350px;
-  font-size: medium;
-  padding-right: 35px;
 }

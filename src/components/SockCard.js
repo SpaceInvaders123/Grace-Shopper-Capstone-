@@ -7,13 +7,10 @@ import Card from "react-bootstrap/Card";
 const SockCard = ({ sock }) => {
   return (
     <Card className="containercard">
-      <div className="card-header">
-        <h5 className="card-sockname">{sock.name}</h5>
-        <div className="card-sockprice">${sock.price}</div>
-      </div>
-      <img className="card-image" src={sock.product_img} alt={sock.name} />
-
-      <div className="card-sockdescription">{sock.description}</div>
+      <Card.Title>{sock.name}</Card.Title>
+      <div className="card-sockprice">${sock.price}</div>
+      <Card.Img variant="top" src={sock.product_img} alt={sock.name} />
+      <Card.Text>{sock.description}</Card.Text>
     </Card>
   );
 };
