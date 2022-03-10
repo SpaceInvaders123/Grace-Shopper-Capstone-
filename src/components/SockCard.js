@@ -1,19 +1,15 @@
 import React from "react";
 import "../style/SockCard.css";
+import Card from "react-bootstrap/Card";
 
 const SockCard = ({ sock }) => {
   return (
-    <div className="card">
-      <div className="card-header">
-        <div className="card-group">
-          <h5 className="card-sockname">{sock.name}</h5>
-          <div className="card-sockprice">${sock.price}</div>
-        </div>
-      </div>
-      <img className="card-image" src={sock.product_img} alt={sock.name} />
-
-      <div className="card-sockdescription">{sock.description}</div>
-    </div>
+    <Card className="containercard">
+      <Card.Title>{sock.name}</Card.Title>
+      <div className="card-sockprice">${sock.price}</div>
+      <Card.Img variant="top" src={sock.product_img} alt={sock.name} />
+      <Card.Text>{sock.description}</Card.Text>
+    </Card>
   );
 };
 
