@@ -15,6 +15,7 @@ const Footer = () => {
         Socks4u
       </h1>
       <Container>
+        <img href="./" src={require("../style/socks4youX.png")} width="15%" />
         <Row>
           <Column>
             <Heading>Products</Heading>
@@ -32,23 +33,17 @@ const Footer = () => {
             <Heading>Social Media</Heading>
             <FooterLink href="#">
               <i className="facebook">
-                <span style={{ marginLeft: "10px" }}>
-                  Facebook
-                </span>
+                <span style={{ marginLeft: "10px" }}>Facebook</span>
               </i>
             </FooterLink>
             <FooterLink href="#">
               <i className="instagram">
-                <span style={{ marginLeft: "10px" }}>
-                  Instagram
-                </span>
+                <span style={{ marginLeft: "10px" }}>Instagram</span>
               </i>
             </FooterLink>
             <FooterLink href="#">
               <i className="twitter">
-                <span style={{ marginLeft: "10px" }}>
-                  Twitter
-                </span>
+                <span style={{ marginLeft: "10px" }}>Twitter</span>
               </i>
             </FooterLink>
           </Column>
