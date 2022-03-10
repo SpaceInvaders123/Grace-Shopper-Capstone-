@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import SockCard from "./SockCard";
 import "../style/Home.css";
+import Row from "react-bootstrap/Row";
 
 export default function Home() {
   const [socks, setSocks] = useState([]);
-  const URL = "http://grace-shopper-space.herokuapp.com/api/socks";
+  const URL = "http://localhost:4000/api/socks";
   async function fetchSocks(url) {
     const socks = await fetch(url);
     return await socks.json();
@@ -15,12 +16,16 @@ export default function Home() {
   return (
     <div className="Home">
       <div className="lander">
-        <h1>Socks4u</h1>
         <p className="text-muted">The Space-Invaders Present</p>
+        <img src={require("../style/socks4you.png")} height="100" />
+        <br />
+        <br />
         <div>
-          {socks.map((sock) => {
-            return <SockCard sock={sock} key={sock.id} />;
-          })}
+          <Row xs={1} md={3} className="g-4">
+            {socks.map((sock) => {
+              return <SockCard sock={sock} key={sock.id} />;
+            })}{" "}
+          </Row>
         </div>
       </div>
     </div>
