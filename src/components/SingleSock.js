@@ -5,16 +5,20 @@ import { useParams } from "react-router-dom";
 
 export default function SingleSock() {
   const { sockId } = useParams();
-
   const [singleSock, setSingleSock] = useState([]);
-  const URL = `http://grace-shopper-space.herokuapp.com/api/socks/${sockId}`;
-  async function fetchSingleSock(URL) {
-    const response = await fetch(URL);
-    return await response.json();
+  try {
+    const URL = `http://grace-shopper-space.herokuapp.com/api/socks/${sockId}`;
+    async function fetchSingleSock(URL) {
+      const response = await fetch(URL);
+      return await response.json();
+    }
+    useEffect(() => {
+      fetchSingleSock(URL).then((sock) => setSingleSock(sock));
+    }, []);
+  } catch (err) {
+    throw err;
   }
-  useEffect(() => {
-    fetchSingleSock(URL).then((sock) => setSingleSock(sock));
-  }, []);
+
   return (
     <div className="Home">
       <div className="lander">
