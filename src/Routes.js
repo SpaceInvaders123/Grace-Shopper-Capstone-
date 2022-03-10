@@ -29,7 +29,7 @@ export default function Routes() {
       <Route exact path="/login">
         <Login />
       </Route>
-      <Route exact path="/socks1">
+      <Route exact path="/socks/:sockId">
         <SingleSock />
       </Route>
     </Switch>

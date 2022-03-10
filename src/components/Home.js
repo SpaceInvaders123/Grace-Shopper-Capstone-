@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SockCard from "./SockCard";
 import "../style/Home.css";
-import Footer from "./Footer";
 
 export default function Home() {
   const [socks, setSocks] = useState([]);

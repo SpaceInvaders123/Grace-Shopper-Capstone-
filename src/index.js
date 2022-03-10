@@ -12,13 +12,10 @@ This uses the browser’s History API to create real URLs
 
 2) Use the Router to render our App component. 
 This will allow us to create the routes we need inside our App component. */
-import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

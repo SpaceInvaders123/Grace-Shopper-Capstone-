@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
 import "../style/SockCard.css";
+import SockCard from "./SockCard";
+import { useParams } from "react-router-dom";
 
-export default function SingleSock({ sock }) {
-  const [socks, setSocks] = useState([]);
-  const URL = `http://localhost:4000/api/socks/1`;
+export default function SingleSock() {
+  const { sockId } = useParams();
+
+  const [singleSock, setSingleSock] = useState([]);
+  const URL = `http://grace-shopper-space.herokuapp.com/api/socks/${sockId}`;
   async function fetchSingleSock(URL) {
-    const socks = await fetch(URL);
-    return await socks.json();
+    const response = await fetch(URL);
+    return await response.json();
   }
   useEffect(() => {
-    fetchSingleSock(URL).then((res) => setSocks([...res]));
+    fetchSingleSock(URL).then((sock) => setSingleSock(sock));
   }, []);
   return (
-    <div className="card">
-      <div className="card-header">
-        <h5 className="card-sockname">{socks.name}</h5>
-        <div className="card-sockprice">${sock.price}</div>
+    <div className="Home">
+      <div className="lander">
+        <h1>Socks4u</h1>
+        <p className="text-muted">The Space-Invaders Present</p>
+        <div>
+          <SockCard sock={singleSock} key={singleSock.id} />
+        </div>
       </div>
-      <img className="card-image" src={sock.product_img} alt={sock.name} />
-
-      <div className="card-sockdescription">{sock.description}</div>
     </div>
   );
 }
