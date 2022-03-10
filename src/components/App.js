@@ -13,9 +13,7 @@ const App = () => {
   return (
     <div className="App container py-3">
       <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
-        <Navbar.Brand href="/" className="font-weight-bold text-muted">
-          Socks4u
-        </Navbar.Brand>
+        <img href="./" src={require("../style/socks4you.png")} height="50" />
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Nav activeKey={window.location.pathname}></Nav>
