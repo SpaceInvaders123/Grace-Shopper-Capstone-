@@ -21,7 +21,13 @@ const App = () => {
       <div className="App container py-3">
         <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
           <LinkContainer to="/">
-            <img src={require("../style/socks4you.png")} height="50" />
+            <Nav.Link>
+              <img
+                href="./"
+                src={require("../style/socks4you.png")}
+                height="50"
+              />
+            </Nav.Link>
           </LinkContainer>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
@@ -30,6 +36,7 @@ const App = () => {
               {isAuthenticated ? (
                 <>
                   <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+
                   <LinkContainer to="/profile">
                     <Nav.Link href="/profile">Profile</Nav.Link>
                   </LinkContainer>

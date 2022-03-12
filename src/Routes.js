@@ -18,22 +18,11 @@ it looks for / and renders the Home component when matched.
 export default function Routes() {
   return (
     <Switch>
-      <Route exact path="/">
-        <Home />
-      </Route>
-      <Route exact path="/profile">
-        <Profile />
-      </Route>
-      <Route exact path="/signup">
-        <SignUp />
-      </Route>
-      <Route exact path="/login">
-        <Login />
-      </Route>
-      <Route exact path="/socks/:sockId">
-        <SingleSock />
-      </Route>
-      <NotFound />
+      <Route exact path="/" component={Home}></Route>
+      <Route exact path="/profile" component={Profile}></Route>
+      <Route exact path="/signup" component={SignUp}></Route>
+      <Route exact path="/login" component={Login}></Route>
+      <Route exact path="/socks/:sockId" component={SingleSock} />
     </Switch>
   );
 }
