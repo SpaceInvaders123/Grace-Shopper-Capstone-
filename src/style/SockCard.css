@@ -10,10 +10,7 @@ body {
 }
 
 .containercard {
-  float: left;
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  min-height: 500px;
 }
 
 .card {
@@ -26,7 +23,7 @@ body {
   border-color: #159a9c;
   border-style: solid;
   transition: 200ms;
-  min-width: 300px;
+  min-width: 100px;
   margin: 5px 10px;
   flex-basis: 200px;
   flex-grow: 1;

@@ -12,7 +12,12 @@ const Footer = () => {
   return (
     <Box>
       <h1 style={{ color: "red", textAlign: "center", marginTop: "0px" }}>
-      <img href="./" src={require("../style/socks4youX.png")} width="15%" />
+        <img
+          href="./"
+          src={require("../style/socks4youX.png")}
+          alt="logo"
+          width="15%"
+        />
       </h1>
       <Container>
         <Row>
