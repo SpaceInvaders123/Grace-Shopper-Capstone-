@@ -26,7 +26,12 @@ const App = () => {
             <Nav activeKey={window.location.pathname}></Nav>
             <Nav>
               {isAuthenticated ? (
-                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                <>
+                  <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                  <LinkContainer to="/profile">
+                    <Nav.Link href="/profile">Profile</Nav.Link>
+                  </LinkContainer>
+                </>
               ) : (
                 <>
                   <LinkContainer to="/signup">
@@ -34,9 +39,6 @@ const App = () => {
                   </LinkContainer>
                   <LinkContainer to="/login">
                     <Nav.Link href="/login">Login</Nav.Link>
-                  </LinkContainer>
-                  <LinkContainer to="/API">
-                    <Nav.Link href="/API">API</Nav.Link>
                   </LinkContainer>
                 </>
               )}

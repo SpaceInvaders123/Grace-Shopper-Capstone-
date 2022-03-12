@@ -20,7 +20,7 @@ export default function Routes() {
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/API">
+      <Route exact path="/profile">
         <API />
       </Route>
       <Route exact path="/signup">
