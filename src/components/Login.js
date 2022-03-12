@@ -25,14 +25,13 @@ const Login = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            user: {
-              username: text,
-              password: password,
-            },
+            username: text,
+            password: password,
           }),
         }
       );
-      const { data } = await response.json();
+      const data = await response.json();
+      //console.log(data);
       const jotToken = JSON.stringify(data.token);
       localStorage.setItem(`stAuth`, jotToken);
       alert("Logged in");
