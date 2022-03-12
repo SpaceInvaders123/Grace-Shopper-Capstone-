@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "../style/SockCard.css";
+import "../style/SingleSock.css";
 import SockCard from "./SockCard";
 import { useParams } from "react-router-dom";
 
 export default function SingleSock() {
   const { sockId } = useParams();
   const [singleSock, setSingleSock] = useState([]);
+
   try {
     const URL = `http://grace-shopper-space.herokuapp.com/api/socks/${sockId}`;
     async function fetchSingleSock(URL) {
