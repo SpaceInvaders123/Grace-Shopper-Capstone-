@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 
 export default function Home() {
   const [socks, setSocks] = useState([]);
-  const URL = "http://grace-shopper-space.herokuapp.com/api/socks";
+  const URL = "http://localhost:4000/api/socks";
   async function fetchSocks(url) {
     const socks = await fetch(url);
     return await socks.json();

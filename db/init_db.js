@@ -141,7 +141,7 @@ const socksToCreate = [
     quantity: 100,
   },
   {
-    name: "Incredible Soc",
+    name: "Incredible Sock",
     category_id: 1,
     inventory_id: 2,
     price: 75,
