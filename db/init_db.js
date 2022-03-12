@@ -184,7 +184,7 @@ const socksToCreate = [
     description:
       "Smiling is a chain reaction! This contagious design guarantees to put anyone who looks at you in a good mood.",
     product_img:
-      "https://img.ssensemedia.com/images/b_white,g_center,f_auto,q_auto:best/202342F076165_1/balenciaga-green-logo-tennis-socks.jpg",
+      "https://cdn.shopify.com/s/files/1/0023/0191/9345/products/785614787201_5314064c-fa38-4fff-8444-b21cb26e842d_499x499.jpg?v=1645169983",
     quantity: 80,
   },
   {

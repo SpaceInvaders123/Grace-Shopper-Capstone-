@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 
 export default function Home() {
   const [socks, setSocks] = useState([]);
-  const URL = "http://grace-shopper-space.herokuapp.com/api/socks";
+  const URL = "http://localhost:4000/api/socks";
   async function fetchSocks(url) {
     const socks = await fetch(url);
     return await socks.json();
@@ -17,7 +17,7 @@ export default function Home() {
     <div className="Home">
       <div className="lander">
         <p className="text-muted">The Space-Invaders Present</p>
-        <img src={require("../style/socks4you.png")} height="100" />
+        <img src={require("../style/socks4you.png")} alt="logo" height="100" />
         <br />
         <br />
         <div>
