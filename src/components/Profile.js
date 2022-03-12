@@ -3,21 +3,32 @@ import { getAPIHealth } from "../axios-services";
 import "../style/API.css";
 
 const Profile = () => {
-  const [APIHealth, setAPIHealth] = useState("");
+  const [userObject, setUserObject] = useState([]);
+
+  const URL = "https://grace-shopper-space.herokuapp.com/api/users/me";
+
+  async function fetchUserObject(URL) {
+    const token = localStorage.getItem("stAuth");
+    const fixedToken = token.replace(/^"(.*)"$/, "$1");
+
+    const userObject = await fetch(URL, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + fixedToken,
+      },
+    });
+    return await userObject.json();
+  }
 
   useEffect(() => {
-    const getAPIStatus = async () => {
-      const { healthy } = await getAPIHealth();
-      setAPIHealth(healthy ? "api is up! :D" : "api is down :/");
-    };
-
-    getAPIStatus();
+    fetchUserObject(URL).then((res) => setUserObject(res));
   }, []);
+  console.log(userObject);
 
   return (
     <div>
-      <h1>Hello, World!</h1>
-      <p>API Status: {APIHealth}</p>
+      <h1>Hello {userObject.first_name}!</h1>
+      <p>API Status:?</p>
     </div>
   );
 };
