@@ -15,7 +15,12 @@ const Footer = () => {
         Socks4u
       </h1>
       <Container>
-        <img href="./" src={require("../style/socks4youX.png")} width="15%" />
+        <img
+          href="./"
+          src={require("../style/socks4youX.png")}
+          alt="logo"
+          width="15%"
+        />
         <Row>
           <Column>
             <Heading>Products</Heading>

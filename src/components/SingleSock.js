@@ -14,7 +14,7 @@ export default function SingleSock() {
   }
   useEffect(() => {
     fetchSingleSock(URL).then((sock) => setSingleSock(sock));
-  }, []);
+  });
   return (
     <div className="Home">
       <div className="lander">

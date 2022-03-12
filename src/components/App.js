@@ -15,7 +15,12 @@ const App = () => {
     <Router>
       <div className="App container py-3">
         <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
-          <img href="./" src={require("../style/socks4you.png")} height="50" />
+          <img
+            href="./"
+            src={require("../style/socks4you.png")}
+            alt="logo"
+            height="50"
+          />
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav activeKey={window.location.pathname}></Nav>
