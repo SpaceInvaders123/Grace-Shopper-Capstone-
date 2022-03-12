@@ -9,6 +9,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import Footer from "./Footer";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AppContext } from "../contextLib";
+import { Store } from "./Cart";
 
 const App = () => {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -57,6 +58,7 @@ const App = () => {
         <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
           <Routes />
         </AppContext.Provider>
+        <Store />
         <Footer />
       </div>
     </Router>
