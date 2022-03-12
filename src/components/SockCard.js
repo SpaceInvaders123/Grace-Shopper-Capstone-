@@ -20,6 +20,7 @@ const SockCard = ({ sock }) => {
         <Card.Title>{sock.name}</Card.Title>
         <div className="card-sockprice">{formatter.format(sock.price)}</div>
         <Card.Img variant="top" src={sock.product_img} alt={sock.name} />
+        <Card.Text>{sock.size}</Card.Text>
         <Card.Text>{sock.description}</Card.Text>
       </Card>
     </Link>
