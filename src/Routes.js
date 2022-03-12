@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
-import API from "./components/API";
+import Profile from "./components/Profile";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import SingleSock from "./components/SingleSock";
@@ -21,7 +21,7 @@ export default function Routes() {
         <Home />
       </Route>
       <Route exact path="/profile">
-        <API />
+        <Profile />
       </Route>
       <Route exact path="/signup">
         <SignUp />
