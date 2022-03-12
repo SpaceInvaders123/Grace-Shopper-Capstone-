@@ -9,6 +9,7 @@ export default function SingleSock() {
   const [singleSock, setSingleSock] = useState({});
 
   useEffect(() => {
+<<<<<<< HEAD
     console.log(sockId);
 
     async function fetchSingleSock() {
@@ -29,6 +30,10 @@ export default function SingleSock() {
 
   const { name, price, product_img, size, description } = singleSock;
 
+=======
+    fetchSingleSock(URL).then((sock) => setSingleSock(sock));
+  });
+>>>>>>> main
   return (
     <Container className="single-sock">
       <Grid container spacing={4}>
