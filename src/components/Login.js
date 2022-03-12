@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import { useAppContext } from "../contextLib";
 
 const Login = () => {
-  //const { userHasAuthenticated } = useAppContext();
+  const { userHasAuthenticated } = useAppContext();
 
   const [text, setText] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +36,7 @@ const Login = () => {
       const jotToken = JSON.stringify(data.token);
       localStorage.setItem(`stAuth`, jotToken);
       alert("Logged in");
-      //userHasAuthenticated(true);
+      userHasAuthenticated(true);
       //console.log(localStorage);
       //console.log(jotToken);
     } catch (e) {
