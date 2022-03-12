@@ -30,16 +30,14 @@ const SignUp = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            user: {
-              username: text,
-              password: password,
-              first_name: firstName,
-              email: email,
-            },
+            username: text,
+            password: password,
+            first_name: firstName,
+            email: email,
           }),
         }
       );
-      const { data } = await response.json();
+      const data = await response.json();
       localStorage.setItem(`stAuth`, JSON.stringify(data.token));
       // console.log(data.token)
       alert("Sign-Up compleate, Please Login");
