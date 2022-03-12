@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import { useAppContext } from "../contextLib";
 
 const Login = () => {
-  //const { userHasAuthenticated } = useAppContext();
+  const { userHasAuthenticated } = useAppContext();
 
   const [text, setText] = useState("");
   const [password, setPassword] = useState("");
@@ -25,18 +26,17 @@ const Login = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            user: {
-              username: text,
-              password: password,
-            },
+            username: text,
+            password: password,
           }),
         }
       );
-      const { data } = await response.json();
+      const data = await response.json();
+      //console.log(data);
       const jotToken = JSON.stringify(data.token);
       localStorage.setItem(`stAuth`, jotToken);
       alert("Logged in");
-      //userHasAuthenticated(true);
+      userHasAuthenticated(true);
       //console.log(localStorage);
       //console.log(jotToken);
     } catch (e) {
