@@ -1,0 +1,19 @@
+#profileCard1 {
+  justify-content: center;
+  align-items: center;
+}
+
+#profileCard2 {
+  justify-content: center;
+  align-items: center;
+}
+
+#header1,
+#header2 {
+  font-family: "Open Sans", sans-serif;
+}
+
+#title {
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+}
