@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Accordion, Card, Form, Button } from "react-bootstrap";
 import "../style/Profile.css";
-import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const [userObject, setUserObject] = useState([]);
@@ -26,20 +25,20 @@ const Profile = () => {
   //useeffect for the me call above
   useEffect(() => {
     fetchUserObject(URL).then((res) => setUserObject(res));
-  }, []);
-  console.log(userObject);
+  }, [URL]);
+  //console.log(userObject);
 
   // start of API call to patch UserObject
   //formating the URL for the patch call, dirty but it works
   const userId = userObject.id;
   const URL2 = "https://grace-shopper-space.herokuapp.com/api/users/" + userId;
-  console.log(URL2);
+  //console.log(URL2);
   //start of patch API call
   async function handleSubmit(event) {
     event.preventDefault();
 
     try {
-      const response = await fetch(URL2, {
+      await fetch(URL2, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -62,52 +61,56 @@ const Profile = () => {
       <Accordion>
         <Card id="profileCard1">
           <Accordion.Item eventKey="0">
-            <Accordion.Header id="header1" class="headers">
-              <h5 class="mb-0">Edit Profile Information</h5>
+            <Accordion.Header id="header1">
+              <h5 className="mb-0">Edit Profile Information</h5>
             </Accordion.Header>
             <Accordion.Body>
               <Form onSubmit={handleSubmit}>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Username</label>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Username</label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="editUsername"
                     placeholder={userObject.username}
                     onChange={(e) => setUserName(e.target.value)}
                   />
-                  <small id="emailHelp" class="form-text text-muted">
+                  <small id="emailHelp" className="form-text text-muted">
                     Please enter your new Username!
                   </small>
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">First Name</label>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">First Name</label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     aria-describedby="editFirstname"
                     placeholder={userObject.first_name}
                     onChange={(e) => setFirstName(e.target.value)}
                   />
-                  <small id="emailHelp" class="form-text text-muted">
+                  <small id="emailHelp" className="form-text text-muted">
                     Please enter your new Username!
                   </small>
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Email address</label>
                   <input
                     type="email"
-                    class="form-control"
+                    className="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                     placeholder={userObject.email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <small id="emailHelp" class="form-text text-muted">
+                  <small id="emailHelp" className="form-text text-muted">
                     We'll never share your email with anyone else.
                   </small>
                 </div>
-                <div class="row justify-content-center">
-                  <Button type="submit" class="btn btn-primary" id="submitBtn">
+                <div className="row justify-content-center">
+                  <Button
+                    type="submit"
+                    className="btn btn-primary"
+                    id="submitBtn"
+                  >
                     Submit
                   </Button>
                 </div>
@@ -117,8 +120,8 @@ const Profile = () => {
         </Card>
         <Card id="profileCard2">
           <Accordion.Item eventKey="1">
-            <Accordion.Header id="header2" class="headers">
-              <h5 class="mb-0">Order History</h5>
+            <Accordion.Header id="header2">
+              <h5 className="mb-0">Order History</h5>
             </Accordion.Header>
             <Accordion.Body></Accordion.Body>
           </Accordion.Item>
