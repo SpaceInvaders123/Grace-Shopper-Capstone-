@@ -23,6 +23,7 @@ export default function Routes() {
       <Route exact path="/signup" component={SignUp}></Route>
       <Route exact path="/login" component={Login}></Route>
       <Route exact path="/socks/:sockId" component={SingleSock} />
+      <NotFound />
     </Switch>
   );
 }
