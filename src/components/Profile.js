@@ -29,13 +29,12 @@ const Profile = () => {
   }, []);
   console.log(userObject);
 
-  //API call to patch UserObject
-  //const { userId } = useParams();
+  // start of API call to patch UserObject
+  //formating the URL for the patch call, dirty but it works
   const userId = userObject.id;
-
   const URL2 = "https://grace-shopper-space.herokuapp.com/api/users/" + userId;
   console.log(URL2);
-
+  //start of patch API call
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -107,9 +106,11 @@ const Profile = () => {
                     We'll never share your email with anyone else.
                   </small>
                 </div>
-                <Button type="submit" class="btn btn-primary">
-                  Submit
-                </Button>
+                <div class="row justify-content-center">
+                  <Button type="submit" class="btn btn-primary" id="submitBtn">
+                    Submit
+                  </Button>
+                </div>
               </Form>
             </Accordion.Body>
           </Accordion.Item>
