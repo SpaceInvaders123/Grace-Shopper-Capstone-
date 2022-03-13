@@ -1,4 +1,4 @@
-/* import React, { useEffect, useState } from "react";
+/*  import React, { useEffect, useState } from "react";
 import "../style/SingleSock.css";
 import { Grid, Button, Container, Typography } from "@material-ui/core";
 
@@ -62,4 +62,4 @@ export default function SingleSock() {
     </Container>
   );
 }
- */
+  */
