@@ -25,6 +25,7 @@ const App = () => {
               <img
                 href="./"
                 src={require("../style/socks4you.png")}
+                alt=""
                 height="50"
               />
             </Nav.Link>

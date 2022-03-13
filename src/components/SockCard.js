@@ -2,10 +2,7 @@ import React from "react";
 import "../style/SockCard.css";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-
-// function formatPrice(price) {
-//   return (price / 100).toFixed(2);
-// }
+import { sockUrls } from "../imageURLs";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
