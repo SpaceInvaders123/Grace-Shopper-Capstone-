@@ -1,4 +1,4 @@
-/*  import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../style/SingleSock.css";
 import { Grid, Button, Container, Typography } from "@material-ui/core";
 
@@ -35,7 +35,7 @@ export default function SingleSock() {
         <Grid item xs={12} md={8} className="image-grid">
           <img
             onLoad={() => {
-              setLoading(false);
+              //setLoading(false);
               // src={sock.src}
               // alt={singleSock.product_img};
             }}
@@ -52,7 +52,7 @@ export default function SingleSock() {
                 varaint="contained"
                 className="increase-quantity"
                 onClick={() => {
-                  handleQuantity("increase");
+                  //handleQuantity("increase");
                 }}
               ></Button>
             </Grid>
@@ -62,4 +62,3 @@ export default function SingleSock() {
     </Container>
   );
 }
-  */
