@@ -14,7 +14,7 @@ export default function SingleSock() {
     console.log(sockId);
 
     async function fetchSingleSock() {
-      const URL = `http://grace-shopper-space.herokuapp.com/api/socks/${sockId}`;
+      const URL = `http://localhost:3000/api/socks/${sockId}`;
       try {
         const response = await fetch(URL);
         const sock = await response.json();
