@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { Button } from "react-bootstrap";
 import { useAppContext } from "../contextLib";
+import { useHistory } from "react-router-dom";
+import LoaderButton from "./LoaderButton";
+import "../style/Login.css";
 
 const Login = () => {
   const { userHasAuthenticated } = useAppContext();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   function validateForm() {
     return text.length > 0 && password.length > 0;
@@ -16,6 +19,7 @@ const Login = () => {
   async function handleSubmit(event) {
     //event.onload();
     event.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await fetch(
@@ -32,15 +36,13 @@ const Login = () => {
         }
       );
       const data = await response.json();
-      //console.log(data);
       const jotToken = JSON.stringify(data.token);
       localStorage.setItem(`stAuth`, jotToken);
-      alert("Logged in");
       userHasAuthenticated(true);
-      //console.log(localStorage);
-      //console.log(jotToken);
+      history.push("/");
     } catch (e) {
-      alert(e.message);
+      alert(e.message + " incorect Username or Password! ");
+      setIsLoading(false);
     }
   }
 
@@ -64,15 +66,15 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button
+        <LoaderButton
           block
           size="lg"
           type="submit"
+          isLoading={isLoading}
           disabled={!validateForm()}
-          id="Button"
         >
           Login
-        </Button>
+        </LoaderButton>
       </Form>
     </div>
   );

@@ -10,6 +10,9 @@ const Profile = () => {
   const [firstName, setFirstName] = useState("");
   const [username, setUserName] = useState("");
 
+  /**************
+   * Fetch Me *
+   **************/
   //API call to fetch the users's Me object in the first place
   const URL = `https://grace-shopper-space.herokuapp.com/api/users/me`;
   async function fetchUserObject(URL) {
@@ -29,6 +32,9 @@ const Profile = () => {
     fetchUserObject(URL).then((res) => setUserObject(res));
   }, [URL]);
 
+  /**************
+   * Edit Info *
+   **************/
   // start of API call to edit a users login data
   //formating the URL for the patch call, dirty but it works
   const userId = userObject.id;
@@ -55,6 +61,9 @@ const Profile = () => {
     }
   }
 
+  /**************
+   * Order History *
+   **************/
   //formating the Me object to just the orders
   const userOrdersMeta = userObject.orders;
   //desctruting the Me orders to just the prodcuts that were ordered
