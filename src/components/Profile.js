@@ -1,6 +1,8 @@
+import { ContactSupportOutlined } from "@material-ui/icons";
 import React, { useState, useEffect } from "react";
 import { Accordion, Card, Form, Button } from "react-bootstrap";
 import "../style/Profile.css";
+import UserOrdersCard from "./UserOrdersCard";
 
 const Profile = () => {
   const [userObject, setUserObject] = useState([]);
@@ -8,7 +10,7 @@ const Profile = () => {
   const [firstName, setFirstName] = useState("");
   const [username, setUserName] = useState("");
 
-  //API call to fetch the me object in the first place
+  //API call to fetch the users's Me object in the first place
   const URL = `https://grace-shopper-space.herokuapp.com/api/users/me`;
   async function fetchUserObject(URL) {
     const token = localStorage.getItem("stAuth");
@@ -27,21 +29,10 @@ const Profile = () => {
     fetchUserObject(URL).then((res) => setUserObject(res));
   }, [URL]);
 
-  //formating the Me object to just the orders
-  const userOrdersMeta = userObject.orders;
-  //console.log(userOrdersMeta);
-  //desctruting the Me orders to just the prodcuts that were ordered
-  const userProducts = [
-    ...new Set(userOrdersMeta?.map((item) => item.products)),
-  ];
-  console.log(userProducts[0]);
-  console.log(userProducts[1]);
-
-  // start of API call to patch UserObject
+  // start of API call to edit a users login data
   //formating the URL for the patch call, dirty but it works
   const userId = userObject.id;
   const URL2 = "https://grace-shopper-space.herokuapp.com/api/users/" + userId;
-  //console.log(URL2);
   //start of patch API call
   async function handleSubmit(event) {
     event.preventDefault();
@@ -63,6 +54,29 @@ const Profile = () => {
       alert(e.message);
     }
   }
+
+  //formating the Me object to just the orders
+  const userOrdersMeta = userObject.orders;
+  //desctruting the Me orders to just the prodcuts that were ordered
+  const userProductOrders = [
+    ...new Set(userOrdersMeta?.map((item) => item.products)),
+  ];
+  //placeholder array that will hold pushed filtered data
+  let filteredProducts = [];
+  //filtering for status="settled" and pushing to above array
+  function filterProducts() {
+    for (let i = 0; i < userProductOrders.length; i++) {
+      const element = userProductOrders[i];
+      for (let j = 0; j < element.length; j++) {
+        const elementJ = element[j];
+        if (elementJ.status === "settled") {
+          filteredProducts.push(elementJ);
+        }
+      }
+    }
+  }
+  //need to envoke function or the array is never filled
+  filterProducts();
 
   return (
     <div>
@@ -132,7 +146,13 @@ const Profile = () => {
             <Accordion.Header id="header2">
               <h5 className="mb-0">Order History</h5>
             </Accordion.Header>
-            <Accordion.Body></Accordion.Body>
+            <Accordion.Body>
+              <div>
+                {filteredProducts.map((products) => {
+                  return <UserOrdersCard filteredProducts={products} />;
+                })}
+              </div>
+            </Accordion.Body>
           </Accordion.Item>
         </Card>
       </Accordion>
