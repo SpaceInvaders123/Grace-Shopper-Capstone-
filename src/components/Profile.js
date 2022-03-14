@@ -26,7 +26,16 @@ const Profile = () => {
   useEffect(() => {
     fetchUserObject(URL).then((res) => setUserObject(res));
   }, [URL]);
-  //console.log(userObject);
+
+  //formating the Me object to just the orders
+  const userOrdersMeta = userObject.orders;
+  //console.log(userOrdersMeta);
+  //desctruting the Me orders to just the prodcuts that were ordered
+  const userProducts = [
+    ...new Set(userOrdersMeta?.map((item) => item.products)),
+  ];
+  console.log(userProducts[0]);
+  console.log(userProducts[1]);
 
   // start of API call to patch UserObject
   //formating the URL for the patch call, dirty but it works
