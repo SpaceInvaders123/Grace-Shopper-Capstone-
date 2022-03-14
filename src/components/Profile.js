@@ -33,7 +33,7 @@ const Profile = () => {
   }, [URL]);
 
   /**************
-   * Edit Info *
+   * Edit User Info *
    **************/
   // start of API call to edit a users login data
   //formating the URL for the patch call, dirty but it works
