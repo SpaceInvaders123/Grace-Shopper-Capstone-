@@ -46,7 +46,13 @@ export default function SingleSock() {
         <Grid item xs={12} md={8} className="image-grid">
           <img
             onLoad={() => {
+<<<<<<< HEAD
+              //setLoading(false);
+              // src={sock.src}
+              // alt={singleSock.product_img};
+=======
               setLoading(false);
+>>>>>>> main
             }}
             // src={sock.src}
             // alt={singleSock.product_img}
@@ -63,7 +69,7 @@ export default function SingleSock() {
                 varaint="contained"
                 className="increase-quantity"
                 onClick={() => {
-                  handleQuantity("increase");
+                  //handleQuantity("increase");
                 }}
               >
                 +
