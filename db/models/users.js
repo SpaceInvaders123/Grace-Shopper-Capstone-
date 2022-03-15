@@ -1,7 +1,7 @@
 // grab our db client connection to use with our adapters
-const client = require('../client');
-const bcrypt = require('bcrypt');
-const { getUserOrdersByUserId } = require('./user_orders');
+const client = require("../client");
+const bcrypt = require("bcrypt");
+const { getUserOrdersByUserId } = require("./user_orders");
 
 module.exports = {
   // add your database adapter fns here
@@ -66,7 +66,7 @@ async function updateUser(userId, updateFields) {
 
     const setString = Object.keys(updateFields)
       .map((key, idx) => `${key} = $${idx + 2}`)
-      .join(', ');
+      .join(", ");
 
     console.log(setString);
 
@@ -121,7 +121,7 @@ async function hardDeleteUser(userId) {
 }
 
 async function getUserByUserName(username) {
-  console.log('inside getUserByUserName', username);
+  console.log("inside getUserByUserName", username);
   try {
     const {
       rows: [user],
@@ -166,6 +166,8 @@ async function getUserById(userID) {
     );
 
     const userOrders = await getUserOrdersByUserId(userID);
+
+    console.log({ userOrders });
     user.orders = userOrders;
     return user;
   } catch (err) {
