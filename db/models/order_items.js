@@ -8,8 +8,8 @@ module.exports = {
 };
 
 async function createOrderItems({
-  orderId,
-  socksId,
+  order_id,
+  socks_id,
   quantity,
   price_paid,
   created_at,
@@ -23,7 +23,7 @@ async function createOrderItems({
         VALUES ($1, $2, $3, $4, $5)
         RETURNING *;
         `,
-      [orderId, socksId, quantity, price_paid, created_at]
+      [order_id, socks_id, quantity, price_paid, created_at]
     );
 
     return orderItems;

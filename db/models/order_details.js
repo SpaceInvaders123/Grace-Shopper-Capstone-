@@ -44,19 +44,17 @@ async function getAllOrderDetails() {
 // this gets us products
 async function getOrderDetailsByOrderId(orderId) {
   try {
-    const { rows: orderDetails } = await client.query(
+    const {
+      rows: [orderDetails],
+    } = await client.query(
       `
-    SELECT * FROM order_details
-   JOIN order_items ON order_items.order_id = order_details.id
-   WHERE order_details.id = $1;`,
+    SELECT order_details.*, json_agg(order_items.*) AS order_items FROM order_details
+    JOIN order_items ON order_items.order_id = order_details.id
+    WHERE order_details.id = $1
+    GROUP BY order_details.id, order_items.order_id;`,
       [orderId]
     );
-    /* write a SQL query to grab this order details object and return it */
-    /* 
-      SELECT * FROM order_details
-      JOIN order_items ON order_items.order_id = order_details.id
-      WHERE order_details.id = 1;
-    */
+
     return orderDetails;
   } catch (err) {
     throw err;

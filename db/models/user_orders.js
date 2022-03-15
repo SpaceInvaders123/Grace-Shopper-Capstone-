@@ -33,12 +33,12 @@ async function getUserOrdersByUserId(userId) {
   try {
     const { rows: userOrders } = await client.query(
       `
-    SELECT * FROM users
-    JOIN user_orders ON user_orders.user_id = users.id
-    WHERE users.id = $1;`,
+    SELECT * FROM user_orders
+    WHERE user_id = $1;`,
       [userId]
     );
-    console.log(userOrders);
+
+    const orders = [];
 
     for (let i = 0; i < userOrders.length; i++) {
       // how do we get products associated with this order?
@@ -49,7 +49,9 @@ async function getUserOrdersByUserId(userId) {
       // this needs to be implemented in the OrderDetails adapter
       const orderDetails = await getOrderDetailsByOrderId(userOrder.order_id);
 
-      userOrder.products = orderDetails;
+      console.log({ orderDetails });
+
+      orders.push(orderDetails);
     }
 
     /* 
@@ -61,7 +63,7 @@ async function getUserOrdersByUserId(userId) {
       }
     */
 
-    return userOrders;
+    return orders;
   } catch (err) {
     throw err;
   }
