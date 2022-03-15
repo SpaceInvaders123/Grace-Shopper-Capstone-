@@ -1,12 +1,12 @@
-const apiRouter = require('express').Router();
+const apiRouter = require("express").Router();
 
-apiRouter.get('/', (req, res, next) => {
+apiRouter.get("/", (req, res, next) => {
   res.send({
-    message: 'API is under construction!',
+    message: "API is under construction!",
   });
 });
 
-apiRouter.get('/health', (req, res, next) => {
+apiRouter.get("/health", (req, res, next) => {
   res.send({
     healthy: true,
   });
@@ -15,23 +15,27 @@ apiRouter.get('/health', (req, res, next) => {
 // place your routers here
 
 //SOCKS ROUTER
-const socksRouter = require('./socks');
-apiRouter.use('/socks', socksRouter);
+const socksRouter = require("./socks");
+apiRouter.use("/socks", socksRouter);
 
 //USERS ROUTER
-const usersRouter = require('./users');
-apiRouter.use('/users', usersRouter);
+const usersRouter = require("./users");
+apiRouter.use("/users", usersRouter);
 
 //ADDRESSES ROUTER
-const addressesRouter = require('./addresses');
-apiRouter.use('/addresses', addressesRouter);
+const addressesRouter = require("./addresses");
+apiRouter.use("/addresses", addressesRouter);
 
 //USER_ADDRESS ROUTER
-const userAddressRouter = require('./user_address');
-apiRouter.use('/user_address', userAddressRouter);
+const userAddressRouter = require("./user_address");
+apiRouter.use("/user_address", userAddressRouter);
 
 //category ROUTER
-const categoryRouter = require('./category');
-apiRouter.use('/category', categoryRouter);
+const categoryRouter = require("./category");
+apiRouter.use("/category", categoryRouter);
+
+//order Iteams ROUTER
+const orderItemsRouter = require("./order_items");
+apiRouter.use("/order_items", orderItemsRouter);
 
 module.exports = apiRouter;

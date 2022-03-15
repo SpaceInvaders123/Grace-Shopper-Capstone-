@@ -18,12 +18,15 @@ orderItemsRouter.get("/", async (req, res, next) => {
 });
 
 orderItemsRouter.post("/", async (req, res, next) => {
+  //console.log(req.body);
   try {
-    const { quantity, price_paid, created_at } = req.body;
+    const { quantity, price_paid, created_at, order_id, socks_id } = req.body;
     const orderItems = await createOrderItems({
       quantity,
       price_paid,
       created_at,
+      order_id,
+      socks_id,
     });
     res.send(orderItems);
   } catch (error) {
