@@ -48,22 +48,21 @@ export default function SingleSock() {
             onLoad={() => {
               setLoading(false);
             }}
-            // src={sock.src}
-            // alt={singleSock.product_img}
+            src={singleSock.product_img}
+            alt={singleSock.product_img}
           />
         </Grid>
         <Grid item xs={12} md={8} className="single-info">
-          <Typography variant="h2">{singleSock.name}</Typography>
-          <Typography variant="p">{singleSock.description}</Typography>
-          <Typography variant="p3">Price: {singleSock.price}</Typography>
+          <Typography variant="h1">{singleSock.name}</Typography>
+          <Typography variant="h2">{singleSock.description}</Typography>
+          <Typography variant="h3">Price:${singleSock.price}</Typography>
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <Button
                 size="small"
-                varaint="contained"
                 className="increase-quantity"
                 onClick={() => {
-                  //handleQuantity("increase");
+                  handleQuantity("increase");
                 }}
               >
                 +
@@ -77,9 +76,7 @@ export default function SingleSock() {
             <Grid item xs={12}>
               <Button
                 size="small"
-                color="secondary"
-                varaint="contained"
-                className="increase-quantity"
+                className="decrease-quantity"
                 onClick={() => {
                   handleQuantity("decrease");
                 }}
@@ -95,12 +92,14 @@ export default function SingleSock() {
                   // setCart(newCart);
                   // setIsEmpty(false);
                 }}
-              ></Button>
+              >
+                Add To Cart
+              </Button>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      {loading && <div class="loader"></div>}
+      {loading && <div className="loader"></div>}
     </Container>
   );
 }
