@@ -97,7 +97,7 @@ const items = [
   },
 ]
 
-export const Store = () => {
+export default function Cart() {
   const [cart, setCart] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -162,6 +162,8 @@ export const Store = () => {
     setCart(hardCopy);
   };
 
+
+  /*
   const listItems = items.map((product) => (
     <div className="card cart-card" key={product.inventory_id}>
       <img className="card-img-top cart-img" src={product.image} alt="" />
@@ -177,12 +179,9 @@ export const Store = () => {
       </button>
     </div>
   ));
-
+  */
   return (
     <div>
-      <h2 className="title">STORE</h2>
-      <div className="App-list">{listItems}</div>
-      <hr />
       <h2 className="title">CART</h2>
       <div>
         {!isEmpty ? (

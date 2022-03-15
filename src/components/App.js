@@ -7,9 +7,8 @@ import Routes from "../Routes";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 import Footer from "./Footer";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { AppContext } from "../contextLib";
-import { Store } from "./Cart";
 
 const App = () => {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -41,6 +40,10 @@ const App = () => {
                   <LinkContainer to="/profile">
                     <Nav.Link href="/profile">Profile</Nav.Link>
                   </LinkContainer>
+
+                  <LinkContainer>
+                    <Nav.Link href="/cart">Cart</Nav.Link>
+                  </LinkContainer>
                 </>
               ) : (
                 <>
@@ -50,6 +53,9 @@ const App = () => {
                   <LinkContainer to="/login">
                     <Nav.Link href="/login">Login</Nav.Link>
                   </LinkContainer>
+                  <LinkContainer to="/cart">
+                    <Nav.Link href="/cart">Cart</Nav.Link>
+                  </LinkContainer>
                 </>
               )}
             </Nav>
@@ -58,7 +64,6 @@ const App = () => {
         <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
           <Routes />
         </AppContext.Provider>
-        <Store />
         <Footer />
       </div>
     </Router>
