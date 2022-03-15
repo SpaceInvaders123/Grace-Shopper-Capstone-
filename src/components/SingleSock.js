@@ -37,6 +37,7 @@ export default function SingleSock() {
       setQuantity(quantity + 1);
     }
   };
+  //just to test
 
   const { name, price, product_img, size, description } = singleSock;
 
