@@ -42,6 +42,9 @@ const App = () => {
                   <LinkContainer to="/profile">
                     <Nav.Link href="/profile">Profile</Nav.Link>
                   </LinkContainer>
+                  <LinkContainer to="/Cart">
+                    <Nav.Link href="/Cart">Cart</Nav.Link>
+                  </LinkContainer>
                 </>
               ) : (
                 <>

@@ -79,19 +79,12 @@ const Profile = () => {
         filteredOrders.push(element);
       }
     }
-    console.log(filteredOrders);
   }
   filterOrders();
 
-  /*  let filteredOrderProducts = [];
-  function filterOrderProducts() {
-    for (let i = 0; i < filteredOrders.length; i++) {
-      const element = filteredOrders[i];
-      filteredOrderProducts.push(element.order_items);
-    }
-    console.log(filteredOrderProducts);
-  }
-  filterOrderProducts(); */
+  let orderItems = [];
+  orderItems = filteredOrders.map((cartObj) => cartObj.order_items);
+  const cartArray = orderItems[0];
 
   return (
     <div>
@@ -163,8 +156,8 @@ const Profile = () => {
             </Accordion.Header>
             <Accordion.Body>
               <div>
-                {filteredOrders.map((products) => {
-                  return <UserOrdersCard filteredOrders={products} />;
+                {cartArray?.map((cartArray) => {
+                  return <UserOrdersCard cartArray={cartArray} />;
                 })}
               </div>
             </Accordion.Body>
