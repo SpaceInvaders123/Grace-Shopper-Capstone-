@@ -1,21 +1,38 @@
+import { FilterOutlined } from "@material-ui/icons";
 import React from "react";
 
-const UserOrdersCard = ({ filteredProducts }) => {
+const UserOrdersCard = ({ filteredOrders }) => {
+  console.log(filteredOrders);
+  const itemsArray = filteredOrders.order_items;
+  console.log(itemsArray);
+  const price_paid = itemsArray.map((x) => x.price_paid);
+  console.log(price_paid);
+  const socks_id = itemsArray.map((x) => x.socks_id);
+  console.log(socks_id);
+  const quantity = itemsArray.map((x) => x.quantity);
+  console.log(quantity);
+
   return (
     <div id="postCards">
       <h2 className="postCardElements" id="postCardTitle">
-        Order Number: {filteredProducts.order_id}
+        Order Id: {filteredOrders.id}
       </h2>
       <hr></hr>
       <div className="postCardElements" id="postCardPrice">
-        <b>Price:</b> {filteredProducts.price_paid}
-      </div>
-      <div className="postCardElements" id="postCardLocation">
-        <b>Sock ID:</b>
-        {filteredProducts.socks_id}
+        <b>Sock Id:</b> {socks_id}
       </div>
       <div className="postCardElements" id="postCardSeller">
-        <b>quantity:</b> {filteredProducts.quantity}
+        <b>quantity:</b> {quantity}
+      </div>
+      <div className="postCardElements" id="postCardSeller">
+        <b>Price:</b> {price_paid}
+      </div>
+      <div className="postCardElements" id="postCardPrice">
+        <b>Order Status:</b> {filteredOrders.status}
+      </div>
+      <div className="postCardElements" id="postCardLocation">
+        <b>Order Created On:</b>
+        {filteredOrders.created_at}
       </div>
     </div>
   );
