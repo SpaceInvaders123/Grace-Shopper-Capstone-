@@ -1,21 +1,22 @@
 import React from "react";
 
-const UserOrdersCard = ({ filteredProducts }) => {
+const UserOrdersCard = ({ cartArray }) => {
   return (
     <div id="postCards">
       <h2 className="postCardElements" id="postCardTitle">
-        Order Number: {filteredProducts.order_id}
+        Order Id: {cartArray.order_id}
       </h2>
       <hr></hr>
       <div className="postCardElements" id="postCardPrice">
-        <b>Price:</b> {filteredProducts.price_paid}
-      </div>
-      <div className="postCardElements" id="postCardLocation">
-        <b>Sock ID:</b>
-        {filteredProducts.socks_id}
+        <b>Purchased Product Id: </b> {cartArray.socks_id}
       </div>
       <div className="postCardElements" id="postCardSeller">
-        <b>quantity:</b> {filteredProducts.quantity}
+        <b>quantity: </b>
+        {cartArray.quantity}
+      </div>
+      <div className="postCardElements" id="postCardSeller">
+        <b>Price: </b>
+        {cartArray.price_paid}
       </div>
     </div>
   );

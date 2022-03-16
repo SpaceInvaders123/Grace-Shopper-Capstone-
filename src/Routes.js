@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import SingleSock from "./components/SingleSock";
 import NotFound from "./components/NotFound";
+import Cart from "./components/Cart";
 
 /* This component uses this Switch component from React-Router that 
 renders the first matching route that is defined within it. 
@@ -22,6 +23,7 @@ export default function Routes() {
       <Route exact path="/profile" component={Profile}></Route>
       <Route exact path="/signup" component={SignUp}></Route>
       <Route exact path="/login" component={Login}></Route>
+      <Route exact path="/cart" component={Cart}></Route>
       <Route exact path="/socks/:sockId" component={SingleSock} />
       <NotFound />
     </Switch>

@@ -66,26 +66,25 @@ const Profile = () => {
    **************/
   //formating the Me object to just the orders
   const userOrdersMeta = userObject.orders;
-  //desctruting the Me orders to just the prodcuts that were ordered
-  const userProductOrders = [
-    ...new Set(userOrdersMeta?.map((item) => item.products)),
-  ];
-  //placeholder array that will hold pushed filtered data
-  let filteredProducts = [];
+  //console.log(userOrdersMeta);
+  const userProductOrders = [...new Set(userOrdersMeta?.map((item) => item))];
+  //console.log(userProductOrders);
+
+  let filteredOrders = [];
   //filtering for status="settled" and pushing to above array
-  function filterProducts() {
+  function filterOrders() {
     for (let i = 0; i < userProductOrders.length; i++) {
       const element = userProductOrders[i];
-      for (let j = 0; j < element.length; j++) {
-        const elementJ = element[j];
-        if (elementJ.status === "settled") {
-          filteredProducts.push(elementJ);
-        }
+      if (element.status === "settled") {
+        filteredOrders.push(element);
       }
     }
   }
-  //need to envoke function or the array is never filled
-  filterProducts();
+  filterOrders();
+
+  let orderItems = [];
+  orderItems = filteredOrders.map((cartObj) => cartObj.order_items);
+  const cartArray = orderItems[0];
 
   return (
     <div>
@@ -157,8 +156,8 @@ const Profile = () => {
             </Accordion.Header>
             <Accordion.Body>
               <div>
-                {filteredProducts.map((products) => {
-                  return <UserOrdersCard filteredProducts={products} />;
+                {cartArray?.map((cartArray) => {
+                  return <UserOrdersCard cartArray={cartArray} />;
                 })}
               </div>
             </Accordion.Body>
