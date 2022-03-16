@@ -14,13 +14,13 @@ body {
 }
 
 .card {
-  background-color: white;
-  color: #272727;
+  background-color: rgb(255, 255, 255);
+  color: #cf6cb2;
   box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-radius: 10px;
   border: 0px;
-  border-color: #159a9c;
+  border-color: #882071;
   border-style: solid;
   transition: 200ms;
   min-width: 100px;
@@ -34,7 +34,7 @@ body {
 .card:hover {
   transition: 200ms;
   border: 3px;
-  border-color: #deefe7;
+  border-color: #882071;
   border-style: solid;
 }
 
@@ -42,7 +42,7 @@ body {
   flex: 0.3;
   font-size: medium;
   font-weight: 600;
-  color: #159a9c;
+  color: #cf6cb2;
   letter-spacing: 0.1em;
   margin-top: 0;
   justify-content: flex-end;
