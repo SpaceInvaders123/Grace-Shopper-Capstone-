@@ -84,7 +84,7 @@ const Profile = () => {
     }
     return filteredOrders;
   }
-
+  console.log(userObject);
   filterOrders();
 
   let orderItems = [];

@@ -41,12 +41,15 @@ const Cart = () => {
     }
     return filteredOrders;
   }
-
   filterOrders();
 
   let orderItems = [];
   orderItems = filteredOrders.map((cartObj) => cartObj.order_items);
   const cartArray = orderItems[0];
+
+  async function checkout() {
+    console.log("Checkout!");
+  }
 
   return (
     <div>
@@ -63,6 +66,9 @@ const Cart = () => {
                   return <CartCard cartArray={cartArray} />;
                 })}
               </div>
+              <Button block size="lg" onClick={checkout}>
+                Checkout
+              </Button>
             </Accordion.Body>
           </Accordion.Item>
         </Card>
