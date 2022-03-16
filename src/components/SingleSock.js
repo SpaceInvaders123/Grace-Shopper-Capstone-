@@ -39,7 +39,73 @@ export default function SingleSock() {
   };
   //just to test
 
-  const { name, price, product_img, size, description } = singleSock;
+  //const { name, price, product_img, size, description } = singleSock;
+
+  const [userObject, setUserObject] = useState([]);
+
+  const URL = `https://grace-shopper-space.herokuapp.com/api/users/me`;
+  async function fetchUserObject(URL) {
+    const token = localStorage.getItem("stAuth");
+    const fixedToken = token.replace(/^"(.*)"$/, "$1");
+
+    const userObject = await fetch(URL, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + fixedToken,
+      },
+    });
+    return await userObject.json();
+  }
+  useEffect(() => {
+    fetchUserObject(URL).then((res) => setUserObject(res));
+  }, [URL]);
+  const userOrdersMeta = userObject.orders;
+  const userProductOrders = [...new Set(userOrdersMeta?.map((item) => item))];
+
+  let filteredOrders = [];
+
+  async function filterOrders() {
+    try {
+      for (let i = 0; i < userProductOrders.length; i++) {
+        const element = userProductOrders[i];
+        if (element.status === "pending") {
+          filteredOrders.push(element);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return filteredOrders;
+  }
+  filterOrders();
+
+  let orderId = [];
+  orderId = filteredOrders.map((orderId) => orderId.id);
+  const orderIdArray = orderId[0];
+
+  async function addToCart() {
+    try {
+      const response = await fetch(
+        `https://grace-shopper-space.herokuapp.com/api/order_items`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quantity: quantity,
+            price_paid: singleSock.price * quantity,
+            order_id: orderIdArray,
+            socks_id: singleSock.id,
+          }),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Container className="single-sock">
@@ -86,14 +152,7 @@ export default function SingleSock() {
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Button
-                size="large"
-                className="add-cart"
-                onClick={() => {
-                  // setCart(newCart);
-                  // setIsEmpty(false);
-                }}
-              >
+              <Button size="large" className="add-cart" onClick={addToCart}>
                 Add To Cart
               </Button>
             </Grid>
