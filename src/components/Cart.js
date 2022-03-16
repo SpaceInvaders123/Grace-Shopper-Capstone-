@@ -27,15 +27,21 @@ const Cart = () => {
   const userProductOrders = [...new Set(userOrdersMeta?.map((item) => item))];
 
   let filteredOrders = [];
-  //filtering for status="settled" and pushing to above array
-  function filterOrders() {
-    for (let i = 0; i < userProductOrders.length; i++) {
-      const element = userProductOrders[i];
-      if (element.status === "pending") {
-        filteredOrders.push(element);
+
+  async function filterOrders() {
+    try {
+      for (let i = 0; i < userProductOrders.length; i++) {
+        const element = userProductOrders[i];
+        if (element.status === "pending") {
+          filteredOrders.push(element);
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
+    return filteredOrders;
   }
+
   filterOrders();
 
   let orderItems = [];
