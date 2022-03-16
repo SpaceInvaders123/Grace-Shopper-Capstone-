@@ -247,22 +247,22 @@ const orderDetailsToCreate = [
 
 const orderItemsToCreate = [
   {
-    orderId: 1,
-    socksId: 1,
+    order_id: 1,
+    socks_id: 1,
     quantity: 10,
     price_paid: 200,
     created_at: null,
   },
   {
-    orderId: 1,
-    socksId: 2,
+    order_id: 1,
+    socks_id: 2,
     quantity: 10,
     price_paid: 200,
     created_at: null,
   },
   {
-    orderId: 2,
-    socksId: 1,
+    order_id: 2,
+    socks_id: 1,
     quantity: 5,
     price_paid: 300,
     created_at: null,
