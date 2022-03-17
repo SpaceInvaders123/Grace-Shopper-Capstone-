@@ -2,7 +2,7 @@ import styled from 'styled-components';
    
 export const Box = styled.div`
   padding: 80px 0px;
-  background: black;
+  background: darkgrey;
   position: static;
   bottom: 0;
   width: 100%;
@@ -43,7 +43,7 @@ export const FooterLink = styled.a`
   text-decoration: none;
    
   &:hover {
-    color: red;
+    color: purple;
     transition: 200ms ease-in;
   }
 `;

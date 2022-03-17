@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="Home">
       <div className="lander">
-        <p className="text-muted">The Space-Invaders Present</p>
+        <p className="space-invaders">The Space-Invaders Present</p>
         <img src={require("../style/socks4you.png")} alt="logo" height="100" />
         <br />
         <br />
